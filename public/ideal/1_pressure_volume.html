@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+	<meta charset="utf-8">
+	<title>Pressure &amp; Volume – Beyond Ideal</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="/assets/style.css" type="text/css" media="screen">
+	<script src="/assets/scripts/functions.js" type="text/javascript"></script>
+	<script src="/assets/scripts/canvas.js" type="text/javascript"></script>
+</head>
+<body>
+<div class="wrapper">
+	<header>
+	    <a class="siteTitle" href="/">Beyond Ideal</a>
+	    <span class="siteSubtitle">Interactive Gas Laws</span>
+	</header>
+</div>
+<div id="body">
+	<div id="leftNavigationArea" class="navigationArea">
+	</div>
+	
+	<div id="content">
+		
+		<nav id="navBar"></nav>
+<div id="chapter">
+<div class="page">
+<div class="stepLog twoColumn">
+
+<script>
+    var sim = createSimulation({
+        initialize: function(simulation) {
+			var p = simulation.parameters;
+			p.isOnlyHardSpheres = true;
+			setBoxWidth(simulation, 100);
+
+			var particleCount = 150;
+			for (var i = 0; i < particleCount; i++) {
+				var particle = new Particle();
+				randomDiscInRect(particle.position, particle.radius, simulation.boxBounds);
+				v2.set(particle.velocity, randomGaussian(), randomGaussian());
+				v2.scale(particle.velocity, particle.velocity, 8);
+				addParticle(simulation, particle);
+			}
+
+			setToolbarAvailableTools(simulation.toolbar, ["move"]);
+        },
+    });
+
+    var currentBoxWidth = 100;
+</script>
+
+<h2>Pressure & Volume: Boyle's Law</h2>
+
+<p>What happens when you <strong>squeeze</strong> a gas into a smaller space?</p>
+
+<p>Use the slider below to change the <strong>volume</strong> (width) of the box.</p>
+
+<script>
+	createSliderHere({
+		initialValue: 100,
+		min: 30, max: 100,
+		minLabel: "Small", maxLabel: "Large",
+		update: function(value)
+		{
+			currentBoxWidth = value;
+			setBoxWidth(sim, value);
+			setWallsAlongBorder(sim);
+		},
+	});
+</script>
+
+<p>Shrink the box and watch what happens.</p>
+
+<script>
+	cue(function() {
+		return (currentBoxWidth < 50);
+	});
+	endStep();
+</script>
+
+<p>The particles hit the walls <strong>more often</strong> because they have less room. The pressure goes up!</p>
+
+<script>
+	createTimeSeriesHere({
+		timeRange: 80,
+		yMax: 40,
+		update: function(graph) {
+			return {time: sim.time, data: [getTotalPressure(sim)]};
+		},
+	});
+</script>
+
+<p>Now expand the box back.</p>
+
+<script>
+	cue(function() {
+		return (currentBoxWidth > 80);
+	});
+	endStep();
+</script>
+
+<p>Bigger volume → fewer wall collisions → <strong>lower pressure</strong>.</p>
+
+<p>This inverse relationship is <strong>Boyle's Law</strong>:</p>
+
+<div class="equation">P ∝ 1/V &nbsp;&nbsp;(at constant temperature)</div>
+
+<p>Double the volume, halve the pressure. The product <strong>P × V stays roughly constant</strong> as long as the temperature doesn't change.</p>
+
+
+</div>
+<div class="twoColumn">
+<script>
+	insertHere(sim.div);
+</script>
+</div>
+</div>
+
+</div>
+
+	</div>
+
+	<div id="rightNavigationArea" class="navigationArea">
+	</div>
+</div>
+<footer id="pageFooter">
+</footer>
+</body>
+</html>

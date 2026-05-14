@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+	<meta charset="utf-8">
+	<title>Dalton&#39;s Law – Beyond Ideal</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="/assets/style.css" type="text/css" media="screen">
+	<script src="/assets/scripts/functions.js" type="text/javascript"></script>
+	<script src="/assets/scripts/canvas.js" type="text/javascript"></script>
+</head>
+<body>
+<div class="wrapper">
+	<header>
+	    <a class="siteTitle" href="/">Beyond Ideal</a>
+	    <span class="siteSubtitle">Interactive Gas Laws</span>
+	</header>
+</div>
+<div id="body">
+	<div id="leftNavigationArea" class="navigationArea">
+	</div>
+	
+	<div id="content">
+		
+		<nav id="navBar"></nav>
+<div id="chapter">
+<div class="page">
+<div class="stepLog twoColumn">
+
+<script>
+    var sim = createSimulation({
+        initialize: function(simulation) {
+			var p = simulation.parameters;
+			p.isOnlyHardSpheres = true;
+			setBoxWidth(simulation, 80);
+
+			// Type A particles (default black)
+			var countA = 60;
+			for (var i = 0; i < countA; i++) {
+				var particle = new Particle();
+				particle.type = 0;
+				randomDiscInRect(particle.position, particle.radius, simulation.boxBounds);
+				v2.set(particle.velocity, randomGaussian(), randomGaussian());
+				v2.scale(particle.velocity, particle.velocity, 8);
+				addParticle(simulation, particle);
+			}
+
+			// Type B particles (red)
+			var countB = 40;
+			for (var i = 0; i < countB; i++) {
+				var particle = new Particle();
+				particle.type = 1;
+				particle.color = Color.red;
+				randomDiscInRect(particle.position, particle.radius, simulation.boxBounds);
+				v2.set(particle.velocity, randomGaussian(), randomGaussian());
+				v2.scale(particle.velocity, particle.velocity, 8);
+				addParticle(simulation, particle);
+			}
+
+			setToolbarAvailableTools(simulation.toolbar, ["move", "create"]);
+        },
+    });
+</script>
+
+<h2>Dalton's Law of Partial Pressures</h2>
+
+<p>What happens when you mix different gases together?</p>
+
+<p>On the right, <strong>black</strong> particles and <strong style="color: #ff6b6b;">red</strong> particles share the same box. They're both ideal gases — no attraction, just bouncing.</p>
+
+<p>The total pressure on the walls is the sum of the <strong>partial pressures</strong> from each gas:</p>
+
+<div class="equation">P<sub>total</sub> = P<sub>A</sub> + P<sub>B</sub></div>
+
+<p>This is <strong>Dalton's Law</strong>: each gas contributes pressure as if the other gas wasn't there.</p>
+
+<script>
+	createTimeSeriesHere({
+		timeRange: 80,
+		yMax: 30,
+		update: function(graph) {
+			return {time: sim.time, data: [getTotalPressure(sim)]};
+		},
+	});
+</script>
+
+<p>Try adding more of one type using the <strong>create</strong> tool. The total pressure increases, but each gas type independently contributes its share.</p>
+
+<script>
+	cue(function() {
+		return (sim.particles.length > 130);
+	});
+	endStep();
+</script>
+
+<p>This works because ideal gas particles don't care what's around them — a nitrogen molecule hits the wall just as hard whether it's surrounded by other nitrogen or by oxygen molecules.</p>
+
+<p>But what happens when the particles <em>do</em> care about each other?</p>
+
+
+</div>
+<div class="twoColumn">
+<script>
+	insertHere(sim.div);
+</script>
+</div>
+</div>
+
+</div>
+
+	</div>
+
+	<div id="rightNavigationArea" class="navigationArea">
+	</div>
+</div>
+<footer id="pageFooter">
+</footer>
+</body>
+</html>

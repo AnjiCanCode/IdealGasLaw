@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kinetics on Beyond Ideal</title>
+    <link>//localhost:1313/kinetic/index.html</link>
+    <description>Recent content in Kinetics on Beyond Ideal</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <atom:link href="//localhost:1313/kinetic/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Pressure is Momentum</title>
+      <link>//localhost:1313/kinetic/2_pressure_momentum.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>//localhost:1313/kinetic/2_pressure_momentum.html</guid>
+      <description>&lt;div class=&#34;page&#34;&gt;&#xA;&lt;div class=&#34;stepLog twoColumn&#34;&gt;&#xA;&#xA;&lt;script&gt;&#xA;    var wallDetectorSim = createSimulation({&#xA;        initialize: function(simulation) {&#xA;            var p = simulation.parameters;&#xA;&#x9;&#x9;&#x9;p.isOnlyHardSpheres = true;&#xA;            p.dragStrength = 2;&#xA;&#x9;&#x9;&#x9;setBoxWidth(simulation, 40);&#xA;&#xA;            var particle = new Particle();&#xA;&#x9;&#x9;&#x9;particle.radius = 2;&#xA;            addParticle(simulation, particle);&#xA;&#xA;&#x9;&#x9;&#x9;setToolbarAvailableTools(simulation.toolbar, [&#34;move&#34;]);&#xA;        },&#xA;    });&#xA;&lt;/script&gt;&#xA;&#xA;&lt;h2&gt;Pressure IS Momentum Transfer&lt;/h2&gt;&#xA;&#xA;&lt;p&gt;Let&#39;s zoom in on what pressure really means at the particle level.&lt;/p&gt;&#xA;&#xA;&lt;p&gt;Here&#39;s a single, large particle. Throw it at a wall!&lt;/p&gt;&#xA;&#xA;&lt;script&gt;&#xA;&#x9;createTimeSeriesHere({&#xA;&#x9;&#x9;timeRange: 50,&#xA;&#x9;&#x9;yMax: 10,&#xA;&#x9;&#x9;update: function(graph) {&#xA;&#x9;&#x9;&#x9;return {time: wallDetectorSim.time, data: [getTotalPressure(wallDetectorSim)]};&#xA;&#x9;&#x9;},&#xA;&#x9;});&#xA;&lt;/script&gt;&#xA;&#xA;&lt;script&gt;&#xA;&#x9;cue(function() {&#xA;&#x9;&#x9;var pressure = getTotalPressure(wallDetectorSim);&#xA;&#x9;&#x9;return (pressure &gt; 1);&#xA;&#x9;});&#xA;&#x9;endStep();&#xA;&lt;/script&gt;&#xA;&#xA;&lt;p&gt;See that spike in the graph? That&#39;s the &lt;strong&gt;momentum transfer&lt;/strong&gt; — the particle hits the wall, reverses direction, and pushes the wall outward in the process.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Temperature is Motion</title>
+      <link>//localhost:1313/kinetic/1_temperature_motion.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>//localhost:1313/kinetic/1_temperature_motion.html</guid>
+      <description>&lt;div class=&#34;page&#34;&gt;&#xA;&lt;div class=&#34;stepLog twoColumn&#34;&gt;&#xA;&#xA;&lt;script&gt;&#xA;    var sim = createSimulation({&#xA;        initialize: function(simulation) {&#xA;&#x9;&#x9;&#x9;var p = simulation.parameters;&#xA;&#x9;&#x9;&#x9;p.isOnlyHardSpheres = true;&#xA;&#x9;&#x9;&#x9;p.thermostatDeterministicStrength = 1;&#xA;&#x9;&#x9;&#x9;p.thermostatTemperature = 5;&#xA;&#x9;&#x9;&#x9;setBoxWidth(simulation, 80);&#xA;&#xA;&#x9;&#x9;&#x9;var particleCount = 80;&#xA;&#x9;&#x9;&#x9;for (var i = 0; i &lt; particleCount; i++) {&#xA;&#x9;&#x9;&#x9;&#x9;var particle = new Particle();&#xA;&#x9;&#x9;&#x9;&#x9;randomDiscInRect(particle.position, particle.radius, simulation.boxBounds);&#xA;&#x9;&#x9;&#x9;&#x9;v2.set(particle.velocity, randomGaussian(), randomGaussian());&#xA;&#x9;&#x9;&#x9;&#x9;v2.scale(particle.velocity, particle.velocity, 5);&#xA;&#x9;&#x9;&#x9;&#x9;addParticle(simulation, particle);&#xA;&#x9;&#x9;&#x9;}&#xA;&#xA;&#x9;&#x9;&#x9;setToolbarAvailableTools(simulation.toolbar, [&#34;move&#34;]);&#xA;        },&#xA;    });&#xA;&lt;/script&gt;&#xA;&#xA;&lt;h2&gt;Temperature IS Motion&lt;/h2&gt;&#xA;&#xA;&lt;p&gt;Temperature isn&#39;t some mysterious abstract quantity. It&#39;s simply a measure of &lt;strong&gt;how fast the particles are moving&lt;/strong&gt;.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
