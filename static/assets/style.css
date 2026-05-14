@@ -6,33 +6,33 @@
    ═══════════════════════════════════════ */
 
 :root {
-  /* Aquamarine palette */
-  --bg-deep: #0a1628;
-  --bg-surface: #0f1f35;
-  --bg-card: #142640;
-  --bg-elevated: #1a3050;
-  --bg-header: #0d1a2e;
+  /* Black and White palette */
+  --bg-deep: #000000;
+  --bg-surface: #0a0a0a;
+  --bg-card: #111111;
+  --bg-elevated: #1a1a1a;
+  --bg-header: #000000;
 
   /* Accent colors */
-  --aquamarine: #7fffd4;
-  --aquamarine-dim: #4fc8a0;
-  --aquamarine-glow: rgba(127, 255, 212, 0.15);
-  --turquoise: #40e0d0;
-  --teal: #2aa198;
+  --aquamarine: #ffffff;
+  --aquamarine-dim: #cccccc;
+  --aquamarine-glow: rgba(255, 255, 255, 0.15);
+  --turquoise: #eeeeee;
+  --teal: #bbbbbb;
   --coral: #ff6b6b;
   --coral-dim: #cc5555;
   --amber: #f0c040;
 
   /* Text */
-  --text-primary: #e0f0f0;
-  --text-secondary: #8cb0b8;
-  --text-muted: #506878;
-  --text-accent: #7fffd4;
+  --text-primary: #ffffff;
+  --text-secondary: #cccccc;
+  --text-muted: #888888;
+  --text-accent: #ffffff;
 
   /* Borders */
-  --border-subtle: rgba(127, 255, 212, 0.1);
-  --border-medium: rgba(127, 255, 212, 0.2);
-  --border-strong: rgba(127, 255, 212, 0.4);
+  --border-subtle: rgba(255, 255, 255, 0.15);
+  --border-medium: rgba(255, 255, 255, 0.3);
+  --border-strong: rgba(255, 255, 255, 0.6);
 
   /* Spacing */
   --content-width: 900px;
