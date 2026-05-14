@@ -2073,7 +2073,7 @@ addColor("yellow", [1, 0.8, 0, 1]);
 addColor("orange", [1, 0.3, 0, 1]);
 addColor("purple", [1, 0, 1, 1]);
 addColor("black", [0, 0, 0, 1]);
-addColor("white", [0, 0, 0, 1]);
+addColor("white", [1, 1, 1, 1]);
 addColor("gray", [0.5, 0.5, 0.5, 1]);
 addColor("transparent", [0, 0, 0, 0]);
 
@@ -2176,7 +2176,7 @@ var Particle = function()
     this.pressure = 0;
     this.virial = 0;
 
-    this.color = Color.black;
+    this.color = Color.white;
     this.bounds = new Rectangle();
     this.radius = 1;
     this.mass = 1;
@@ -2314,11 +2314,11 @@ function twoColors(simulation, particleIndex)
 {
     if (particleIndex % 2 == 0)
     {
-        return Color.black;
+        return Color.white;
     }
     else
     {
-        return Color.red;
+        return Color.gray;
     }
 }
 

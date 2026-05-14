@@ -28,7 +28,7 @@ title: "Non-Ideal Mixtures"
 			for (var i = 0; i < countB; i++) {
 				var particle = new Particle();
 				particle.type = 1;
-				particle.color = Color.red;
+				particle.color = Color.gray;
 				randomDiscInRect(particle.position, particle.radius, simulation.boxBounds);
 				v2.set(particle.velocity, randomGaussian(), randomGaussian());
 				v2.scale(particle.velocity, particle.velocity, 6);
