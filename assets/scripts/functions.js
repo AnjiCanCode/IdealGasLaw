@@ -36,80 +36,80 @@ var NavigationInfo = new function ()
 
         // Introduction
         {
-            url: "/intro/1_welcome",
+            url: "/intro/1_welcome.html",
             title: "Welcome",
             sequenceTitle: "Getting Started",
         },
 
         // What is a gas
         {
-            url: "/gas/1_what_is_gas",
+            url: "/gas/1_what_is_gas.html",
             title: "What is a Gas?",
             sequenceTitle: "Gas Basics",
         },
 
         // Ideal Gas Law
         {
-            url: "/ideal/1_pressure_volume",
+            url: "/ideal/1_pressure_volume.html",
             title: "Pressure & Volume",
             sequenceTitle: "The Ideal Gas Law",
         },
         {
-            url: "/ideal/2_pressure_temperature",
+            url: "/ideal/2_pressure_temperature.html",
             title: "Pressure & Temperature",
         },
         {
-            url: "/ideal/3_pvnrt",
+            url: "/ideal/3_pvnrt.html",
             title: "PV = nRT",
         },
 
         // Kinetic Theory
         {
-            url: "/kinetic/1_temperature_motion",
+            url: "/kinetic/1_temperature_motion.html",
             title: "Temperature is Motion",
             sequenceTitle: "Kinetic Theory",
         },
         {
-            url: "/kinetic/2_pressure_momentum",
+            url: "/kinetic/2_pressure_momentum.html",
             title: "Pressure is Momentum",
         },
 
         // Real Gas Deviations
         {
-            url: "/real/1_excluded_volume",
+            url: "/real/1_excluded_volume.html",
             title: "Excluded Volume",
             sequenceTitle: "When Ideal Breaks Down",
         },
         {
-            url: "/real/2_attraction",
+            url: "/real/2_attraction.html",
             title: "Intermolecular Attraction",
         },
 
         // Van der Waals
         {
-            url: "/vanderwaals/1_corrections",
+            url: "/vanderwaals/1_corrections.html",
             title: "Correcting the Ideal Gas Law",
             sequenceTitle: "The van der Waals Equation",
         },
         {
-            url: "/vanderwaals/2_phase_diagram",
+            url: "/vanderwaals/2_phase_diagram.html",
             title: "Phase Transitions",
         },
 
         // Mixtures
         {
-            url: "/mixtures/1_dalton",
+            url: "/mixtures/1_dalton.html",
             title: "Dalton's Law",
             sequenceTitle: "Mixtures & Solutions",
         },
         {
-            url: "/mixtures/2_nonideal",
+            url: "/mixtures/2_nonideal.html",
             title: "Non-Ideal Mixtures",
         },
 
         // Playground
         {
-            url: "/playground/1_explore",
+            url: "/playground/1_explore.html",
             title: "Free Exploration",
             sequenceTitle: "Playground",
         },
