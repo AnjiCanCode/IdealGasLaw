@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Phase Transitions – Beyond Ideal</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="/assets/style.css" type="text/css" media="screen">
+	<script src="/assets/scripts/functions.js" type="text/javascript"></script>
+	<script src="/assets/scripts/canvas.js" type="text/javascript"></script>
+</head>
+<body>
+<div class="wrapper">
+	<header>
+	    <a class="siteTitle" href="/">Beyond Ideal</a>
+	    <span class="siteSubtitle">Interactive Gas Laws</span>
+	</header>
+</div>
+<div id="body">
+	<div id="leftNavigationArea" class="navigationArea">
+	</div>
+	
+	<div id="content">
+		<nav id="navBar"></nav>
+<div id="chapter">
+<div class="page">
+<div class="stepLog twoColumn">
+
+<script>
+    var sim = createSimulation({
+        initialize: function(simulation) {
+			var p = simulation.parameters;
+			p.thermostatDeterministicStrength = 1;
+			p.thermostatTemperature = 0.5;
+			setBoxWidth(simulation, 50);
+
+            var particleCount = 37;
+            for (var particleIndex = 0; particleIndex < particleCount; particleIndex++) {
+                var particle = new Particle();
+                hexagonalLatticePosition(particle.position, particleIndex, 2);
+                addParticle(simulation, particle);
+            }
+
+            var displacement = v2.alloc();
+            var displacementMagnitude = 0.01;
+            for (var particleIndex = 0; particleIndex < simulation.particles.length; particleIndex++) {
+                var particle = simulation.particles[particleIndex];
+                v2.set(displacement, randomGaussian(), randomGaussian());
+                v2.scaleAndAdd(particle.position, particle.position, 
+                    displacement, displacementMagnitude);
+            }
+            v2.free(displacement);
+
+            var ljInteraction = new LennardJonesInteraction();
+            ljInteraction.strength = 10;
+            setInteraction(simulation, 0, 0, ljInteraction);
+
+            setToolbarAvailableTools(simulation.toolbar, ["move"]);
+        }
+    });
+</script>
+
+<h2>Phase Transitions</h2>
+
+<p>The van der Waals equation predicts something the ideal gas law cannot: <strong>phase transitions</strong>.</p>
+
+<p>The particles on the right start as a <strong>solid</strong> — locked in a crystal lattice, barely jiggling.</p>
+
+<p>Slowly increase the temperature.</p>
+
+<script>
+    createSliderHere({
+        initialValue: sim.parameters.thermostatTemperature,
+        min: 0, max: 20,
+        minLabel: "Cold (solid)", maxLabel: "Hot (gas)",
+        transform: function(x) { return (x * x)},
+        inverseTransform: function(x) { return Math.sqrt(x) },
+        update: function (value)
+        {
+            sim.parameters.thermostatTemperature = value;
+        }
+    });
+</script>
+
+<script>
+    cue(function()
+    {
+        return (sim.parameters.thermostatTemperature > 0.5);
+    });
+    endStep();
+</script>
+
+<p>The particles jiggle in place — they're a <strong>solid</strong>.</p>
+
+<p>Keep increasing.</p>
+
+<script>
+    cue(function()
+    {
+        return (sim.parameters.thermostatTemperature > 2.7);
+    });
+    endStep();
+</script>
+
+<p>The particles start "walking" around each other, losing their rigid structure. The solid is <strong>melting into a liquid</strong>.</p>
+
+<p>Keep going!</p>
+
+<script>
+    cue(function()
+    {
+        return (sim.parameters.thermostatTemperature > 5);
+    });
+    endStep();
+</script>
+
+<p>Particles start breaking free from the group entirely — the liquid is <strong>evaporating into a gas</strong>.</p>
+
+<script>
+    cue(function()
+    {
+        return (sim.parameters.thermostatTemperature > 12);
+    });
+    endStep();
+</script>
+
+<p>At high enough temperature, the particles bounce freely — attractions can't hold them together anymore. This is a <strong>gas</strong>.</p>
+
+<p>The ideal gas law only describes this last state. The van der Waals equation bridges the gap, explaining why real gases can condense when cooled and why there's a <strong>critical temperature</strong> above which a gas cannot be liquefied no matter the pressure.</p>
+
+
+</div>
+<div class="twoColumn">
+<script>
+	insertHere(sim.div);
+</script>
+</div>
+</div>
+</div>
+	</div>
+
+	<div id="rightNavigationArea" class="navigationArea">
+	</div>
+</div>
+<footer id="pageFooter">
+</footer>
+</body>
+</html>

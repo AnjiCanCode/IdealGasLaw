@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Pressure is Momentum – Beyond Ideal</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="/assets/style.css" type="text/css" media="screen">
+	<script src="/assets/scripts/functions.js" type="text/javascript"></script>
+	<script src="/assets/scripts/canvas.js" type="text/javascript"></script>
+</head>
+<body>
+<div class="wrapper">
+	<header>
+	    <a class="siteTitle" href="/">Beyond Ideal</a>
+	    <span class="siteSubtitle">Interactive Gas Laws</span>
+	</header>
+</div>
+<div id="body">
+	<div id="leftNavigationArea" class="navigationArea">
+	</div>
+	
+	<div id="content">
+		<nav id="navBar"></nav>
+<div id="chapter">
+<div class="page">
+<div class="stepLog twoColumn">
+
+<script>
+    var wallDetectorSim = createSimulation({
+        initialize: function(simulation) {
+            var p = simulation.parameters;
+			p.isOnlyHardSpheres = true;
+            p.dragStrength = 2;
+			setBoxWidth(simulation, 40);
+
+            var particle = new Particle();
+			particle.radius = 2;
+            addParticle(simulation, particle);
+
+			setToolbarAvailableTools(simulation.toolbar, ["move"]);
+        },
+    });
+</script>
+
+<h2>Pressure IS Momentum Transfer</h2>
+
+<p>Let's zoom in on what pressure really means at the particle level.</p>
+
+<p>Here's a single, large particle. Throw it at a wall!</p>
+
+<script>
+	createTimeSeriesHere({
+		timeRange: 50,
+		yMax: 10,
+		update: function(graph) {
+			return {time: wallDetectorSim.time, data: [getTotalPressure(wallDetectorSim)]};
+		},
+	});
+</script>
+
+<script>
+	cue(function() {
+		var pressure = getTotalPressure(wallDetectorSim);
+		return (pressure > 1);
+	});
+	endStep();
+</script>
+
+<p>See that spike in the graph? That's the <strong>momentum transfer</strong> — the particle hits the wall, reverses direction, and pushes the wall outward in the process.</p>
+
+<p>A harder throw = a bigger spike. Try throwing it faster!</p>
+
+<script>
+	cue(function() {
+		var pressure = getTotalPressure(wallDetectorSim);
+		return (pressure > 5);
+	});
+	endStep();
+</script>
+
+<p>Now push the particle against the wall and hold it there.</p>
+
+<script>
+	var dragTime = 1;
+	var dragTimeLeft = dragTime;
+	cue(function(dt) {
+		var pressure = getTotalPressure(wallDetectorSim);
+		if (pressure > 0.5)
+		{
+			dragTimeLeft -= dt;
+		}
+		else
+		{
+			dragTimeLeft = dragTime;
+		}
+		return (dragTimeLeft <= 0);
+	});
+	endStep();
+</script>
+
+<p>Sustained pushing = sustained pressure. With a single particle you get spikes, but with <strong>many particles</strong> hitting the walls continuously, the spikes average out into a steady pressure reading.</p>
+
+<p>This is exactly what gas pressure is: the <strong>average force per unit area</strong> from countless molecular collisions, happening billions of times per second.</p>
+
+
+</div>
+<div class="twoColumn">
+<script>
+	insertHere(wallDetectorSim.div);
+</script>
+</div>
+</div>
+</div>
+	</div>
+
+	<div id="rightNavigationArea" class="navigationArea">
+	</div>
+</div>
+<footer id="pageFooter">
+</footer>
+</body>
+</html>

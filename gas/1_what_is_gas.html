@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>What is a Gas? – Beyond Ideal</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="/assets/style.css" type="text/css" media="screen">
+	<script src="/assets/scripts/functions.js" type="text/javascript"></script>
+	<script src="/assets/scripts/canvas.js" type="text/javascript"></script>
+</head>
+<body>
+<div class="wrapper">
+	<header>
+	    <a class="siteTitle" href="/">Beyond Ideal</a>
+	    <span class="siteSubtitle">Interactive Gas Laws</span>
+	</header>
+</div>
+<div id="body">
+	<div id="leftNavigationArea" class="navigationArea">
+	</div>
+	
+	<div id="content">
+		<nav id="navBar"></nav>
+<div id="chapter">
+<div class="page">
+<div class="stepLog twoColumn">
+
+<script>
+    var sim = createSimulation({
+        initialize: function(simulation) {
+			var p = simulation.parameters;
+			p.isOnlyHardSpheres = true;
+			setBoxWidth(simulation, 80);
+
+			var particleCount = 100;
+			for (var i = 0; i < particleCount; i++) {
+				var particle = new Particle();
+				randomDiscInRect(particle.position, particle.radius, simulation.boxBounds);
+				v2.set(particle.velocity, randomGaussian(), randomGaussian());
+				v2.scale(particle.velocity, particle.velocity, 8);
+				addParticle(simulation, particle);
+			}
+
+			setToolbarAvailableTools(simulation.toolbar, ["move", "create"]);
+        },
+    });
+</script>
+
+<p>A <strong>gas</strong> is a collection of tiny particles — atoms or molecules — moving randomly in all directions.</p>
+
+<p>They bounce off each other and off the walls of their container. Between collisions, they travel in straight lines.</p>
+
+<p>Watch the particles on the right. Notice how they <strong>spread out to fill the entire box</strong>.</p>
+
+<script>
+	createTimeSeriesHere({
+		timeRange: 80,
+		yMax: 20,
+		update: function(graph) {
+			return {time: sim.time, data: [getTotalPressure(sim)]};
+		},
+	});
+</script>
+
+<p>The graph above shows the <strong>pressure</strong> on the walls. Every time a particle bounces off a wall, it pushes on it. The combined effect of countless tiny pushes is what we call pressure.</p>
+
+<p>Try <strong>adding more particles</strong> with the create tool and watch what happens to the pressure.</p>
+
+<script>
+	cue(function() {
+		return (sim.particles.length > 150);
+	});
+	endStep();
+</script>
+
+<p>More particles → more wall collisions → <strong>higher pressure</strong>.</p>
+
+<p>This is the fundamental insight: macroscopic properties like pressure emerge from the collective behavior of many tiny particles. The <strong>ideal gas law</strong> captures this relationship mathematically.</p>
+
+
+</div>
+<div class="twoColumn">
+<script>
+	insertHere(sim.div);
+</script>
+</div>
+</div>
+</div>
+	</div>
+
+	<div id="rightNavigationArea" class="navigationArea">
+	</div>
+</div>
+<footer id="pageFooter">
+</footer>
+</body>
+</html>

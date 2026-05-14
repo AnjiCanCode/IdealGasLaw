@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Pressure & Temperature – Beyond Ideal</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="/assets/style.css" type="text/css" media="screen">
+	<script src="/assets/scripts/functions.js" type="text/javascript"></script>
+	<script src="/assets/scripts/canvas.js" type="text/javascript"></script>
+</head>
+<body>
+<div class="wrapper">
+	<header>
+	    <a class="siteTitle" href="/">Beyond Ideal</a>
+	    <span class="siteSubtitle">Interactive Gas Laws</span>
+	</header>
+</div>
+<div id="body">
+	<div id="leftNavigationArea" class="navigationArea">
+	</div>
+	
+	<div id="content">
+		<nav id="navBar"></nav>
+<div id="chapter">
+<div class="page">
+<div class="stepLog twoColumn">
+
+<script>
+    var sim = createSimulation({
+        initialize: function(simulation) {
+			var p = simulation.parameters;
+			p.isOnlyHardSpheres = true;
+			p.thermostatDeterministicStrength = 1;
+			p.thermostatTemperature = 5;
+			setBoxWidth(simulation, 80);
+
+			var particleCount = 120;
+			for (var i = 0; i < particleCount; i++) {
+				var particle = new Particle();
+				randomDiscInRect(particle.position, particle.radius, simulation.boxBounds);
+				v2.set(particle.velocity, randomGaussian(), randomGaussian());
+				v2.scale(particle.velocity, particle.velocity, 5);
+				addParticle(simulation, particle);
+			}
+
+			setToolbarAvailableTools(simulation.toolbar, ["move"]);
+        },
+    });
+</script>
+
+<h2>Pressure & Temperature: Gay-Lussac's Law</h2>
+
+<p>Now let's keep the volume fixed and change the <strong>temperature</strong> instead.</p>
+
+<p>Temperature controls how fast the particles move. Use the slider to crank up the heat.</p>
+
+<script>
+	createSliderHere({
+		initialValue: 5,
+		min: 1, max: 50,
+		minLabel: "Cold", maxLabel: "Hot",
+		transform: function(x) { return (x * x) },
+		inverseTransform: function(x) { return Math.sqrt(x) },
+		update: function(value)
+		{
+			sim.parameters.thermostatTemperature = value;
+		},
+	});
+</script>
+
+<p>Increase the temperature and watch the particles.</p>
+
+<script>
+	cue(function() {
+		return (sim.parameters.thermostatTemperature > 20);
+	});
+	endStep();
+</script>
+
+<p>The particles are moving <strong>much faster</strong>! They hit the walls harder and more often.</p>
+
+<script>
+	createTimeSeriesHere({
+		timeRange: 80,
+		yMax: 30,
+		update: function(graph) {
+			return {time: sim.time, data: [getTotalPressure(sim)]};
+		},
+	});
+</script>
+
+<p>Now cool them back down.</p>
+
+<script>
+	cue(function() {
+		return (sim.parameters.thermostatTemperature < 5);
+	});
+	endStep();
+</script>
+
+<p>Slower particles → gentler collisions → <strong>lower pressure</strong>.</p>
+
+<p>This direct relationship is <strong>Gay-Lussac's Law</strong>:</p>
+
+<div class="equation">P ∝ T &nbsp;&nbsp;(at constant volume)</div>
+
+<p>Double the temperature, double the pressure. The ratio <strong>P/T stays constant</strong> when volume doesn't change.</p>
+
+
+</div>
+<div class="twoColumn">
+<script>
+	insertHere(sim.div);
+</script>
+</div>
+</div>
+</div>
+	</div>
+
+	<div id="rightNavigationArea" class="navigationArea">
+	</div>
+</div>
+<footer id="pageFooter">
+</footer>
+</body>
+</html>
