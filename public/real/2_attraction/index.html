@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+	<meta charset="utf-8">
+	<title>Intermolecular Attraction – Beyond Ideal</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="/assets/style.css?v=2" type="text/css" media="screen">
+	<script src="/assets/scripts/functions.js?v=2" type="text/javascript"></script>
+	<script src="/assets/scripts/canvas.js?v=2" type="text/javascript"></script>
+</head>
+<body>
+<div class="wrapper">
+	<header>
+	    <a class="siteTitle" href="/">Beyond Ideal</a>
+	    <span class="siteSubtitle">Interactive Gas Laws</span>
+	</header>
+</div>
+<div id="body">
+	<div id="leftNavigationArea" class="navigationArea">
+	</div>
+	
+	<div id="content">
+		
+		<nav id="navBar"></nav>
+<div id="chapter">
+<div class="page">
+<div class="stepLog twoColumn">
+
+<script>
+    var sim = createSimulation({
+        initialize: function(simulation) {
+			var p = simulation.parameters;
+			p.thermostatDeterministicStrength = 0.5;
+			p.thermostatTemperature = 8;
+			setBoxWidth(simulation, 80);
+
+			var particleCount = 100;
+			var particles = [];
+			for (var i = 0; i < particleCount; i++) {
+				var particle = new Particle();
+				particles.push(particle);
+			}
+			addParticlesRandomlyAround(simulation, particles, v2(0, 0));
+
+			var ljInteraction = new LennardJonesInteraction();
+			ljInteraction.strength = 5;
+			setInteraction(simulation, 0, 0, ljInteraction);
+
+			setToolbarAvailableTools(simulation.toolbar, ["move", "repel"]);
+        },
+    });
+
+    var attractionStrength = 5;
+</script>
+
+<h2>Real Particles Attract Each Other</h2>
+
+<p>The second way real gases differ from ideal: molecules <strong>attract each other</strong> through van der Waals forces.</p>
+
+<p>Watch the particles, they tend to <strong>cluster</strong> slightly. They're not completely independent like ideal gas particles.</p>
+
+<p>Use the slider to change the <strong>attraction strength</strong>.</p>
+
+<script>
+	createSliderHere({
+		initialValue: 5,
+		min: 0, max: 20,
+		minLabel: "No attraction", maxLabel: "Strong",
+		update: function(value)
+		{
+			attractionStrength = value;
+			var ljInteraction = new LennardJonesInteraction();
+			ljInteraction.strength = value;
+			setInteraction(sim, 0, 0, value > 0.1 ? ljInteraction : null);
+		},
+	});
+</script>
+
+<p>Crank the attraction to maximum.</p>
+
+<script>
+	cue(function() {
+		return (attractionStrength > 15);
+	});
+	endStep();
+</script>
+
+<p>Strong attraction causes the particles to <strong>clump together</strong>. The gas starts to condense!</p>
+
+<script>
+	createTimeSeriesHere({
+		timeRange: 80,
+		yMax: 20,
+		update: function(graph) {
+			return {time: sim.time, data: [getTotalPressure(sim)]};
+		},
+	});
+</script>
+
+<p>Notice the pressure is <strong>lower</strong> than you'd expect. Why? Because particles that are being pulled back by their neighbors hit the walls with <strong>less force</strong>.</p>
+
+<p>Now turn attraction to zero.</p>
+
+<script>
+	cue(function() {
+		return (attractionStrength < 0.5);
+	});
+	endStep();
+</script>
+
+<p>Without attraction, the particles spread out and the pressure rises, back to ideal gas behavior!</p>
+
+<p>The van der Waals equation corrects for this with the <em>a</em> parameter:</p>
+
+<div class="equation">P<sub>effective</sub> = P<sub>measured</sub> + a(n/V)²</div>
+
+<p>At high temperature, particles move too fast for attractions to matter. At low temperature, attractions dominate and can even cause <strong>liquefaction</strong>.</p>
+
+
+</div>
+<div class="twoColumn">
+<script>
+	insertHere(sim.div);
+</script>
+</div>
+</div>
+
+</div>
+
+	</div>
+
+	<div id="rightNavigationArea" class="navigationArea">
+	</div>
+</div>
+<footer id="pageFooter">
+</footer>
+</body>
+</html>

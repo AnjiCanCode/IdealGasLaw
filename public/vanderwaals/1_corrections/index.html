@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+	<meta charset="utf-8">
+	<title>Correcting the Ideal Gas Law – Beyond Ideal</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="/assets/style.css?v=2" type="text/css" media="screen">
+	<script src="/assets/scripts/functions.js?v=2" type="text/javascript"></script>
+	<script src="/assets/scripts/canvas.js?v=2" type="text/javascript"></script>
+</head>
+<body>
+<div class="wrapper">
+	<header>
+	    <a class="siteTitle" href="/">Beyond Ideal</a>
+	    <span class="siteSubtitle">Interactive Gas Laws</span>
+	</header>
+</div>
+<div id="body">
+	<div id="leftNavigationArea" class="navigationArea">
+	</div>
+	
+	<div id="content">
+		
+		<nav id="navBar"></nav>
+<div id="chapter">
+<div class="page">
+<div class="stepLog twoColumn">
+
+<h2>The Van der Waals Equation</h2>
+
+<div class="equation">(P + a·n²/V²)(V − nb) = nRT</div>
+
+<p>This equation makes two corrections to the ideal gas law:</p>
+
+<ul>
+  <li><strong>+ a·n²/V²</strong>, corrects for intermolecular <strong>attraction</strong> reducing the measured pressure</li>
+  <li><strong>− nb</strong>, corrects for the <strong>excluded volume</strong> of the molecules themselves</li>
+</ul>
+
+<p>Let's compare. On the right are <strong>two simulations running side by side</strong>.</p>
+
+<script>
+    var idealSim = createSimulation({
+		pixelWidth: 400,
+		pixelHeight: 200,
+        initialize: function(simulation) {
+			var p = simulation.parameters;
+			p.isOnlyHardSpheres = true;
+			p.thermostatDeterministicStrength = 0.5;
+			p.thermostatTemperature = 10;
+			setBoxWidth(simulation, 60);
+
+			var particleCount = 80;
+			for (var i = 0; i < particleCount; i++) {
+				var particle = new Particle();
+				randomDiscInRect(particle.position, particle.radius, simulation.boxBounds);
+				v2.set(particle.velocity, randomGaussian(), randomGaussian());
+				v2.scale(particle.velocity, particle.velocity, 6);
+				addParticle(simulation, particle);
+			}
+			setToolbarAvailableTools(simulation.toolbar, ["move"]);
+        },
+    });
+
+	var realSim = createSimulation({
+		pixelWidth: 400,
+		pixelHeight: 200,
+        initialize: function(simulation) {
+			var p = simulation.parameters;
+			p.thermostatDeterministicStrength = 0.5;
+			p.thermostatTemperature = 10;
+			setBoxWidth(simulation, 60);
+
+			var particleCount = 80;
+			var particles = [];
+			for (var i = 0; i < particleCount; i++) {
+				var particle = new Particle();
+				particles.push(particle);
+			}
+			addParticlesRandomlyAround(simulation, particles, v2(0, 0));
+
+			var ljInteraction = new LennardJonesInteraction();
+			ljInteraction.strength = 5;
+			setInteraction(simulation, 0, 0, ljInteraction);
+			setToolbarAvailableTools(simulation.toolbar, ["move"]);
+        },
+    });
+</script>
+
+<p><strong>Top:</strong> Ideal gas (no attraction, point particles)<br>
+<strong>Bottom:</strong> Real gas (attraction + finite size)</p>
+
+<script>
+	createTimeSeriesHere({
+		timeRange: 100,
+		yMax: 30,
+		update: function(graph) {
+			var idealP = getTotalPressure(idealSim);
+			var realP = getTotalPressure(realSim);
+			return {time: idealSim.time, data: [idealP, realP]};
+		},
+	});
+</script>
+
+<p>The pressure graph shows both: <strong>ideal</strong> (first trace) vs <strong>real</strong> (second trace).</p>
+
+<p>Change the temperature and see how the difference changes.</p>
+
+<script>
+	createSliderHere({
+		initialValue: 10,
+		min: 1, max: 50,
+		minLabel: "Cold", maxLabel: "Hot",
+		transform: function(x) { return (x * x) },
+		inverseTransform: function(x) { return Math.sqrt(x) },
+		update: function(value)
+		{
+			idealSim.parameters.thermostatTemperature = value;
+			realSim.parameters.thermostatTemperature = value;
+		},
+	});
+</script>
+
+<p>Cool the gas down.</p>
+
+<script>
+	cue(function() {
+		return (idealSim.parameters.thermostatTemperature < 3);
+	});
+	endStep();
+</script>
+
+<p>At low temperature, the real gas pressure drops significantly below ideal, the attractions dominate. If you go cold enough, the real gas will start to <strong>condense</strong> into clumps!</p>
+
+<p>Heat it up high.</p>
+
+<script>
+	cue(function() {
+		return (idealSim.parameters.thermostatTemperature > 30);
+	});
+	endStep();
+</script>
+
+<p>At high temperature, the two pressures converge, fast-moving particles are barely affected by the weak attractions. <strong>Hot real gases behave nearly ideally.</strong></p>
+
+
+</div>
+<div class="twoColumn">
+<script>
+	insertHere(idealSim.div);
+	insertHere(realSim.div);
+</script>
+</div>
+</div>
+
+</div>
+
+	</div>
+
+	<div id="rightNavigationArea" class="navigationArea">
+	</div>
+</div>
+<footer id="pageFooter">
+</footer>
+</body>
+</html>

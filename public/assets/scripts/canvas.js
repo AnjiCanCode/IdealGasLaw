@@ -154,31 +154,59 @@ function drawDiscMarker(renderer, position, pixelRadius, color)
 function drawTrajectoryUnzipped(renderer, xs, ys, color)
 {
     var c = renderer.context;
-    c.strokeStyle = color.css;
+    var canvasStart = v2.alloc();
+    var worldStart = v2(xs[0], ys[0]);
+    
+    transformToRectFromRect(canvasStart, renderer.canvasBounds, worldStart, renderer.bounds);
 
+    c.save();
+    c.setTransform(1, 0, 0, 1, 0, 0);
     c.beginPath();
-    c.moveTo(xs[0], ys[0]);
+    c.moveTo(canvasStart[0], canvasStart[1]);
+
+    var canvasPoint = v2.alloc();
     for (var i = 1; i < xs.length; i++)
     {
-        c.lineTo(xs[i], ys[i]);
+        var worldPoint = v2(xs[i], ys[i]);
+        transformToRectFromRect(canvasPoint, renderer.canvasBounds, worldPoint, renderer.bounds);
+        c.lineTo(canvasPoint[0], canvasPoint[1]);
     }
-    screenRelativeStroke(c);
+
+    c.strokeStyle = color.css;
+    c.stroke();
+    c.restore();
+
+    v2.free(canvasStart);
+    v2.free(canvasPoint);
 }
 
 function drawTrajectory(renderer, trajectory, color)
 {
     var c = renderer.context;
-    c.strokeStyle = color.css;
-    var startPoint = trajectory[0];
+    var canvasStart = v2.alloc();
+    var worldStart = trajectory[0];
 
+    transformToRectFromRect(canvasStart, renderer.canvasBounds, worldStart, renderer.bounds);
+
+    c.save();
+    c.setTransform(1, 0, 0, 1, 0, 0);
     c.beginPath();
-    c.moveTo(startPoint[0], startPoint[1]);
+    c.moveTo(canvasStart[0], canvasStart[1]);
+
+    var canvasPoint = v2.alloc();
     for (var i = 1; i < trajectory.length; i++)
     {
-        var point = trajectory[i];
-        c.lineTo(point[0], point[1]);
+        var worldPoint = trajectory[i];
+        transformToRectFromRect(canvasPoint, renderer.canvasBounds, worldPoint, renderer.bounds);
+        c.lineTo(canvasPoint[0], canvasPoint[1]);
     }
-    screenRelativeStroke(c);
+
+    c.strokeStyle = color.css;
+    c.stroke();
+    c.restore();
+
+    v2.free(canvasStart);
+    v2.free(canvasPoint);
 }
 
 function drawRectangle(renderer, rectangle, color)

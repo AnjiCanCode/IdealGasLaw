@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+	<meta charset="utf-8">
+	<title>Free Exploration – Beyond Ideal</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="/assets/style.css?v=2" type="text/css" media="screen">
+	<script src="/assets/scripts/functions.js?v=2" type="text/javascript"></script>
+	<script src="/assets/scripts/canvas.js?v=2" type="text/javascript"></script>
+</head>
+<body>
+<div class="wrapper">
+	<header>
+	    <a class="siteTitle" href="/">Beyond Ideal</a>
+	    <span class="siteSubtitle">Interactive Gas Laws</span>
+	</header>
+</div>
+<div id="body">
+	<div id="leftNavigationArea" class="navigationArea">
+	</div>
+	
+	<div id="content">
+		
+		<nav id="navBar"></nav>
+<div id="chapter">
+<div class="page">
+<div class="twoColumn">
+
+<h2>Playground</h2>
+
+<p>All the controls, no restrictions. Explore freely!</p>
+
+<script>
+    var sim = createSimulation({
+        initialize: function(simulation) {
+			var p = simulation.parameters;
+			p.thermostatDeterministicStrength = 0.5;
+			p.thermostatTemperature = 10;
+			setBoxWidth(simulation, 80);
+
+			var particleCount = 80;
+			for (var i = 0; i < particleCount; i++) {
+				var particle = new Particle();
+				randomDiscInRect(particle.position, particle.radius, simulation.boxBounds);
+				v2.set(particle.velocity, randomGaussian(), randomGaussian());
+				v2.scale(particle.velocity, particle.velocity, 6);
+				addParticle(simulation, particle);
+			}
+
+			setToolbarAvailableTools(simulation.toolbar, ["move", "create", "attract", "repel", "delete"]);
+        },
+    });
+
+    var currentBoxWidth = 80;
+    var currentAttractionStrength = 0;
+</script>
+
+<h3>Volume</h3>
+<script>
+	createSliderHere({
+		initialValue: 80,
+		min: 15, max: 120,
+		minLabel: "Tiny", maxLabel: "Huge",
+		update: function(value)
+		{
+			currentBoxWidth = value;
+			setBoxWidth(sim, value);
+			setWallsAlongBorder(sim);
+		},
+	});
+</script>
+
+<h3>Temperature</h3>
+<script>
+	createSliderHere({
+		initialValue: 10,
+		min: 0.1, max: 80,
+		minLabel: "Freezing", maxLabel: "Blazing",
+		transform: function(x) { return (x * x) },
+		inverseTransform: function(x) { return Math.sqrt(x) },
+		update: function(value)
+		{
+			sim.parameters.thermostatTemperature = value;
+		},
+	});
+</script>
+
+<h3>Attraction Strength</h3>
+<script>
+	createSliderHere({
+		initialValue: 0,
+		min: 0, max: 30,
+		minLabel: "None (ideal)", maxLabel: "Very strong",
+		update: function(value)
+		{
+			currentAttractionStrength = value;
+			if (value < 0.1) {
+				sim.parameters.isOnlyHardSpheres = true;
+				setInteraction(sim, 0, 0, null);
+			} else {
+				sim.parameters.isOnlyHardSpheres = false;
+				var ljInteraction = new LennardJonesInteraction();
+				ljInteraction.strength = value;
+				setInteraction(sim, 0, 0, ljInteraction);
+			}
+		},
+	});
+</script>
+
+<h3>Gravity</h3>
+<script>
+	createSliderHere({
+		initialValue: 0,
+		min: 0, max: 2,
+		minLabel: "Off", maxLabel: "Strong",
+		update: function(value)
+		{
+			sim.parameters.gravityAcceleration = value;
+		},
+	});
+</script>
+
+<h3>Pressure</h3>
+<script>
+	createTimeSeriesHere({
+		timeRange: 100,
+		yMax: 40,
+		update: function(graph) {
+			return {time: sim.time, data: [getTotalPressure(sim)]};
+		},
+	});
+</script>
+
+<h3>Temperature (measured)</h3>
+<script>
+	createTimeSeriesHere({
+		timeRange: 100,
+		yMax: 30,
+		update: function(graph) {
+			return {time: sim.time, data: [getTotalTemperature(sim)]};
+		},
+	});
+</script>
+
+<p style="margin-top: 24px; color: var(--text-muted); font-size: 14px;">Use all the tools, move, create, attract, repel, delete, and all the sliders to explore the full range of gas behavior. See if you can:</p>
+
+<ul style="color: var(--text-muted); font-size: 14px;">
+  <li>Make the gas condense into a liquid</li>
+  <li>Boil the liquid back to a gas</li>
+  <li>Create maximum pressure</li>
+  <li>Make it rain (use gravity + attraction)</li>
+</ul>
+
+</div>
+<div class="twoColumn">
+<script>
+	insertHere(sim.div);
+</script>
+</div>
+</div>
+
+</div>
+
+	</div>
+
+	<div id="rightNavigationArea" class="navigationArea">
+	</div>
+</div>
+<footer id="pageFooter">
+</footer>
+</body>
+</html>

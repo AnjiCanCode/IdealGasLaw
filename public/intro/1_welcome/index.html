@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+	<meta charset="utf-8">
+	<title>Welcome – Beyond Ideal</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="/assets/style.css?v=2" type="text/css" media="screen">
+	<script src="/assets/scripts/functions.js?v=2" type="text/javascript"></script>
+	<script src="/assets/scripts/canvas.js?v=2" type="text/javascript"></script>
+</head>
+<body>
+<div class="wrapper">
+	<header>
+	    <a class="siteTitle" href="/">Beyond Ideal</a>
+	    <span class="siteSubtitle">Interactive Gas Laws</span>
+	</header>
+</div>
+<div id="body">
+	<div id="leftNavigationArea" class="navigationArea">
+	</div>
+	
+	<div id="content">
+		
+		<nav id="navBar"></nav>
+<div id="chapter">
+<div class="page">
+<div class="stepLog twoColumn">
+
+<script>
+    var sim = createSimulation({
+        initialize: function(simulation) {
+			var p = simulation.parameters;
+			p.isOnlyHardSpheres = true;
+			setBoxWidth(simulation, 60);
+
+			var particleCount = 60;
+			for (var i = 0; i < particleCount; i++) {
+				var particle = new Particle();
+				randomDiscInRect(particle.position, particle.radius, simulation.boxBounds);
+				v2.set(particle.velocity, randomGaussian(), randomGaussian());
+				v2.scale(particle.velocity, particle.velocity, 8);
+				addParticle(simulation, particle);
+			}
+
+			setToolbarAvailableTools(simulation.toolbar, ["move", "create", "attract"]);
+        },
+    });
+</script>
+
+<p>Welcome! Throughout this explainer, you'll interact with <strong>particle simulations</strong> like the one on the right.</p>
+
+<p>These simulations run in real time and respond to your input. Try <strong>clicking and dragging</strong> a particle to throw it around!</p>
+
+<script>
+	cue(function() {
+		var energy = getTotalEnergy(sim);
+		return (energy > 2);
+	});
+	endStep();
+</script>
+
+<p>Nice! You can also <strong>switch tools</strong> using the dropdown in the bottom-right corner of the simulation.</p>
+
+<p>Try the <strong>create</strong> tool to add more particles. Hold down and drag to paint particles.</p>
+
+<script>
+	cue(function()
+	{
+		return (sim.particles.length > 80);
+	});
+	endStep();
+</script>
+
+<p>Now try the <strong>attract</strong> tool, click and hold near the particles to pull them toward your cursor.</p>
+
+<script>
+	cue(function()
+	{
+		var isAttractTool = (sim.mouse.mode == MouseMode.attract);
+		return (isAttractTool && sim.mouse.leftButton.down);
+	});
+	endStep();
+</script>
+
+<p>You'll also see <strong>graphs</strong> and <strong>sliders</strong> on later pages that let you measure and control what's happening in the simulation.</p>
+
+<p>When you're ready, click <strong>Next →</strong> at the bottom or the right margin to continue.</p>
+
+
+</div>
+<div class="twoColumn">
+<script>
+	insertHere(sim.div);
+</script>
+</div>
+</div>
+
+</div>
+
+	</div>
+
+	<div id="rightNavigationArea" class="navigationArea">
+	</div>
+</div>
+<footer id="pageFooter">
+</footer>
+</body>
+</html>

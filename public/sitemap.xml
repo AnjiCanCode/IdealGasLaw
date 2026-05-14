@@ -2,54 +2,54 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>//localhost:1313/index.html</loc>
+    <loc>//localhost:1313/</loc>
   </url><url>
-    <loc>//localhost:1313/categories/index.html</loc>
+    <loc>//localhost:1313/categories/</loc>
   </url><url>
-    <loc>//localhost:1313/vanderwaals/1_corrections.html</loc>
+    <loc>//localhost:1313/vanderwaals/1_corrections/</loc>
   </url><url>
-    <loc>//localhost:1313/mixtures/1_dalton.html</loc>
+    <loc>//localhost:1313/mixtures/1_dalton/</loc>
   </url><url>
-    <loc>//localhost:1313/real/1_excluded_volume.html</loc>
+    <loc>//localhost:1313/real/1_excluded_volume/</loc>
   </url><url>
-    <loc>//localhost:1313/playground/1_explore.html</loc>
+    <loc>//localhost:1313/playground/1_explore/</loc>
   </url><url>
-    <loc>//localhost:1313/gas/index.html</loc>
+    <loc>//localhost:1313/gas/</loc>
   </url><url>
-    <loc>//localhost:1313/ideal/index.html</loc>
+    <loc>//localhost:1313/ideal/</loc>
   </url><url>
-    <loc>//localhost:1313/real/2_attraction.html</loc>
+    <loc>//localhost:1313/real/2_attraction/</loc>
   </url><url>
-    <loc>//localhost:1313/intro/index.html</loc>
+    <loc>//localhost:1313/intro/</loc>
   </url><url>
-    <loc>//localhost:1313/kinetic/index.html</loc>
+    <loc>//localhost:1313/kinetic/</loc>
   </url><url>
-    <loc>//localhost:1313/mixtures/index.html</loc>
+    <loc>//localhost:1313/mixtures/</loc>
   </url><url>
-    <loc>//localhost:1313/mixtures/2_nonideal.html</loc>
+    <loc>//localhost:1313/mixtures/2_nonideal/</loc>
   </url><url>
-    <loc>//localhost:1313/vanderwaals/2_phase_diagram.html</loc>
+    <loc>//localhost:1313/vanderwaals/2_phase_diagram/</loc>
   </url><url>
-    <loc>//localhost:1313/playground/index.html</loc>
+    <loc>//localhost:1313/playground/</loc>
   </url><url>
-    <loc>//localhost:1313/ideal/2_pressure_temperature.html</loc>
+    <loc>//localhost:1313/ideal/2_pressure_temperature/</loc>
   </url><url>
-    <loc>//localhost:1313/ideal/1_pressure_volume.html</loc>
+    <loc>//localhost:1313/ideal/1_pressure_volume/</loc>
   </url><url>
-    <loc>//localhost:1313/kinetic/2_pressure_momentum.html</loc>
+    <loc>//localhost:1313/kinetic/2_pressure_momentum/</loc>
   </url><url>
-    <loc>//localhost:1313/ideal/3_pvnrt.html</loc>
+    <loc>//localhost:1313/ideal/3_pvnrt/</loc>
   </url><url>
-    <loc>//localhost:1313/real/index.html</loc>
+    <loc>//localhost:1313/real/</loc>
   </url><url>
-    <loc>//localhost:1313/tags/index.html</loc>
+    <loc>//localhost:1313/tags/</loc>
   </url><url>
-    <loc>//localhost:1313/kinetic/1_temperature_motion.html</loc>
+    <loc>//localhost:1313/kinetic/1_temperature_motion/</loc>
   </url><url>
-    <loc>//localhost:1313/vanderwaals/index.html</loc>
+    <loc>//localhost:1313/vanderwaals/</loc>
   </url><url>
-    <loc>//localhost:1313/intro/1_welcome.html</loc>
+    <loc>//localhost:1313/intro/1_welcome/</loc>
   </url><url>
-    <loc>//localhost:1313/gas/1_what_is_gas.html</loc>
+    <loc>//localhost:1313/gas/1_what_is_gas/</loc>
   </url>
 </urlset>
