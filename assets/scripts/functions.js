@@ -263,6 +263,18 @@ function replaceAt(string, index, replacementString)
 
 // Add navigation links to page
 
+// Define the sequential order of chapters for next/prev navigation
+var chapterOrder = [
+    "/intro",
+    "/gas",
+    "/ideal",
+    "/kinetic",
+    "/real",
+    "/vanderwaals",
+    "/mixtures",
+    "/playground",
+];
+
 document.addEventListener("DOMContentLoaded", function() {
     var current = NavigationInfo.currentPosition;
 
@@ -273,10 +285,20 @@ document.addEventListener("DOMContentLoaded", function() {
 
     var isFirstPanel = (current.panelIndex === 0);
     var isLastPanel = (current.panelIndex === (current.sequence.panelUrls.length - 1));
+
+    // Find the current chapter's position in the chapter order
+    var currentChapterIndex = chapterOrder.indexOf(current.sequence.baseUrl);
+
     var prevUrl;
     if (isFirstPanel)
     {
-        prevUrl = parentUrl(current.sequence.baseUrl);
+        // Go to last page of previous chapter, or home if this is the first chapter
+        if (currentChapterIndex > 0) {
+            var prevChapter = NavigationInfo.sequences[chapterOrder[currentChapterIndex - 1]];
+            prevUrl = prevChapter ? prevChapter.panelUrls[prevChapter.panelUrls.length - 1] : "/";
+        } else {
+            prevUrl = "/";
+        }
     }
     else
     {
@@ -287,7 +309,13 @@ document.addEventListener("DOMContentLoaded", function() {
     var nextUrl;
     if (isLastPanel)
     {
-        nextUrl = parentUrl(current.sequence.baseUrl);
+        // Go to first page of next chapter, or home if this is the last chapter
+        if (currentChapterIndex >= 0 && currentChapterIndex < chapterOrder.length - 1) {
+            var nextChapter = NavigationInfo.sequences[chapterOrder[currentChapterIndex + 1]];
+            nextUrl = nextChapter ? nextChapter.panelUrls[0] : "/";
+        } else {
+            nextUrl = "/";
+        }
     }
     else
     {
