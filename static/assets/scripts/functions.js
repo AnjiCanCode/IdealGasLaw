@@ -1540,7 +1540,7 @@ function addCurve(graph, opts)
 {
     combineWithDefaults(opts,
     {
-        color: Color.black,
+        color: Color.white,
     });
 
     var curve = {
@@ -3162,10 +3162,10 @@ function drawSimulation(simulation)
     {
         var wall = simulation.walls[i];
         // TODO: one drawWalls call, to reduce number of draw calls
-        drawTrajectory(simulation.renderer, wall.vertices, Color.black);
+        drawTrajectory(simulation.renderer, wall.vertices, Color.white);
     }
 
-    simulation.renderer.context.globalCompositeOperation = "darken";
+    simulation.renderer.context.globalCompositeOperation = "lighter";
     drawParticles(simulation.renderer, simulation.particles, simulation.parameters.isPeriodic);
     simulation.renderer.context.globalCompositeOperation = "source-over";
 
