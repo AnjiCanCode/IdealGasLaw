@@ -304,7 +304,7 @@ document.addEventListener("DOMContentLoaded", function() {
     {
         prevUrl = current.sequence.panelUrls[current.panelIndex - 1];
     }
-    document.getElementById("leftNavigationArea").innerHTML = `<a href=${prevUrl}>«</a>`;
+    document.getElementById("leftNavigationArea").innerHTML = `<a href="${prevUrl}" title="Previous Page">«</a>`;
 
     var nextUrl;
     if (isLastPanel)
@@ -322,8 +322,7 @@ document.addEventListener("DOMContentLoaded", function() {
         nextUrl = current.sequence.panelUrls[current.panelIndex + 1];
     }
 
-    document.getElementById("rightNavigationArea").innerHTML = `<a href=${nextUrl}>»</a>`;
-    document.getElementById("pageFooter").innerHTML = `<a href=${nextUrl}>Next <span class="chevron">»</span></a>`;
+    document.getElementById("rightNavigationArea").innerHTML = `<a href="${nextUrl}" title="Next Page">»</a>`;
 
     // nav bar
 

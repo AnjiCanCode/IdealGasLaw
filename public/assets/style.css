@@ -35,8 +35,8 @@
   --border-strong: rgba(255, 255, 255, 0.6);
 
   /* Spacing */
-  --content-width: 900px;
-  --page-padding: 50px;
+  --content-width: 1000px;
+  --page-padding: 30px;
 
   /* Typography */
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -201,7 +201,7 @@ nav h1 a:hover {
 
 #content {
   width: var(--content-width);
-  padding: var(--page-padding);
+  padding: 30px var(--page-padding);
 }
 
 /* ═══════════════════════════════════════
@@ -209,32 +209,40 @@ nav h1 a:hover {
    ═══════════════════════════════════════ */
 
 .navigationArea {
-  flex: 1;
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 80px;
+  height: 200px;
   display: flex;
+  z-index: 1000;
 }
+
+#leftNavigationArea { left: 20px; }
+#rightNavigationArea { right: 20px; }
 
 .navigationArea a {
   flex: 1;
-  font-size: 60px;
-  font-family: serif;
+  font-size: 40px;
+  font-family: var(--font-mono);
   text-decoration: none;
-  color: transparent;
-  cursor: default;
+  color: var(--text-muted);
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all var(--transition-medium);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
 }
 
 .navigationArea a:hover {
   color: var(--aquamarine);
-  background: linear-gradient(90deg, transparent, var(--aquamarine-glow));
-  cursor: pointer;
+  border-color: var(--aquamarine);
+  background: var(--bg-elevated);
+  box-shadow: 0 0 20px var(--aquamarine-glow);
   text-decoration: none;
-}
-
-#leftNavigationArea a:hover {
-  background: linear-gradient(270deg, transparent, var(--aquamarine-glow));
 }
 
 /* ═══════════════════════════════════════
@@ -242,29 +250,7 @@ nav h1 a:hover {
    ═══════════════════════════════════════ */
 
 footer {
-  min-height: 80px;
-  background: linear-gradient(0deg, var(--bg-header), var(--bg-deep));
-  border-top: 1px solid var(--border-subtle);
-  display: flex;
-}
-
-footer a {
-  flex: 1;
-  text-decoration: none;
-  font-size: 20px;
-  font-weight: 500;
-  color: transparent;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all var(--transition-medium);
-}
-
-footer a:hover {
-  color: var(--aquamarine);
-  background-color: var(--aquamarine-glow);
-  cursor: pointer;
-  text-decoration: none;
+  display: none;
 }
 
 .chevron {
@@ -360,13 +346,25 @@ li {
 
 .page {
   display: flex;
-  justify-content: space-between;
-  gap: 32px;
+  justify-content: center;
+  gap: 50px;
+  align-items: flex-start;
+  max-width: var(--content-width);
+  margin: 0 auto;
 }
 
 .twoColumn {
-  width: 420px;
+  width: 450px;
   flex-shrink: 0;
+}
+
+/* Make the right column sticky */
+.page > .twoColumn:last-child {
+  position: sticky;
+  top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .threeColumn {
