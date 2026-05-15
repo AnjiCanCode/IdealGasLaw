@@ -41,7 +41,7 @@
 				var particle = new Particle();
 				randomDiscInRect(particle.position, particle.radius, simulation.boxBounds);
 				v2.set(particle.velocity, randomGaussian(), randomGaussian());
-				v2.scale(particle.velocity, particle.velocity, 1.25);
+				v2.scale(particle.velocity, particle.velocity, 2.5);
 				addParticle(simulation, particle);
 			}
 
@@ -58,17 +58,7 @@
 
 <p>Each particle has kinetic energy = ½mv². Temperature is just the <strong>average</strong> of all these energies.</p>
 
-<script>
-	createTimeSeriesHere({
-		timeRange: 80,
-		yMax: 30,
-		update: function(graph) {
-			return {time: sim.time, data: [getTotalTemperature(sim)]};
-		},
-	});
-</script>
-
-<p>The graph shows the average kinetic energy (proportional to temperature). Use the slider to change the thermostat temperature.</p>
+<p>The graph on the right shows the average kinetic energy (proportional to temperature). Use the slider below to change the thermostat temperature.</p>
 
 <script>
 	createSliderHere({
@@ -108,11 +98,18 @@
 
 <p>This is the kinetic theory of gases: <strong>temperature is motion, and motion is temperature</strong>.</p>
 
-
 </div>
 <div class="twoColumn">
 <script>
 	insertHere(sim.div);
+
+	createTimeSeriesHere({
+		timeRange: 80,
+		yMax: 60,
+		update: function(graph) {
+			return {time: sim.time, data: [getTotalTemperature(sim)]};
+		},
+	});
 </script>
 </div>
 </div>

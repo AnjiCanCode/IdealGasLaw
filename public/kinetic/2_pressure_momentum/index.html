@@ -51,16 +51,6 @@
 <p>Here's a single, large particle. Throw it at a wall!</p>
 
 <script>
-	createTimeSeriesHere({
-		timeRange: 50,
-		yMax: 10,
-		update: function(graph) {
-			return {time: wallDetectorSim.time, data: [getTotalPressure(wallDetectorSim)]};
-		},
-	});
-</script>
-
-<script>
 	cue(function() {
 		var pressure = getTotalPressure(wallDetectorSim);
 		return (pressure > 1);
@@ -68,7 +58,7 @@
 	endStep();
 </script>
 
-<p>See that spike in the graph? That's the <strong>momentum transfer</strong>, the particle hits the wall, reverses direction, and pushes the wall outward in the process.</p>
+<p>See that spike in the graph on the right? That's the <strong>momentum transfer</strong>. The particle hits the wall, reverses direction, and pushes the wall outward in the process.</p>
 
 <p>A harder throw = a bigger spike. Try throwing it faster!</p>
 
@@ -104,14 +94,22 @@
 
 <p>This is exactly what gas pressure is: the <strong>average force per unit area</strong> from countless molecular collisions, happening billions of times per second.</p>
 
-
 </div>
 <div class="twoColumn">
 <script>
 	insertHere(wallDetectorSim.div);
+
+	createTimeSeriesHere({
+		timeRange: 50,
+		yMax: 20,
+		update: function(graph) {
+			return {time: wallDetectorSim.time, data: [getTotalPressure(wallDetectorSim)]};
+		},
+	});
 </script>
 </div>
-</di
+</div>
+
 </div>
 
 	</div>

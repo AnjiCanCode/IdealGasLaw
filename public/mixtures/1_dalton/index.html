@@ -45,7 +45,7 @@
 				addParticle(simulation, particle);
 			}
 
-			// Type B particles (red)
+			// Type B particles (red/gray)
 			var countB = 40;
 			for (var i = 0; i < countB; i++) {
 				var particle = new Particle();
@@ -66,23 +66,13 @@
 
 <p>What happens when you mix different gases together?</p>
 
-<p>On the right, <strong>black</strong> particles and <strong style="color: #ff6b6b;">red</strong> particles share the same box. They're both ideal gases, no attraction, just bouncing.</p>
+<p>On the right, <strong>black</strong> particles and <strong style="color: #ff6b6b;">red</strong> particles share the same box. They're both ideal gases: no attraction, just bouncing.</p>
 
 <p>The total pressure on the walls is the sum of the <strong>partial pressures</strong> from each gas:</p>
 
 <div class="equation">P<sub>total</sub> = P<sub>A</sub> + P<sub>B</sub></div>
 
 <p>This is <strong>Dalton's Law</strong>: each gas contributes pressure as if the other gas wasn't there.</p>
-
-<script>
-	createTimeSeriesHere({
-		timeRange: 80,
-		yMax: 30,
-		update: function(graph) {
-			return {time: sim.time, data: [getTotalPressure(sim)]};
-		},
-	});
-</script>
 
 <p>Try adding more of one type using the <strong>create</strong> tool. The total pressure increases, but each gas type independently contributes its share.</p>
 
@@ -93,15 +83,22 @@
 	endStep();
 </script>
 
-<p>This works because ideal gas particles don't care what's around them, a nitrogen molecule hits the wall just as hard whether it's surrounded by other nitrogen or by oxygen molecules.</p>
+<p>This works because ideal gas particles don't care what's around them; a nitrogen molecule hits the wall just as hard whether it's surrounded by other nitrogen or by oxygen molecules.</p>
 
 <p>But what happens when the particles <em>do</em> care about each other?</p>
-
 
 </div>
 <div class="twoColumn">
 <script>
 	insertHere(sim.div);
+
+	createTimeSeriesHere({
+		timeRange: 80,
+		yMax: 60,
+		update: function(graph) {
+			return {time: sim.time, data: [getTotalPressure(sim)]};
+		},
+	});
 </script>
 </div>
 </div>
