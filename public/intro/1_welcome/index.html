@@ -53,9 +53,10 @@
 <p>These simulations run in real time and respond to your input. Try <strong>clicking and dragging</strong> a particle to throw it around!</p>
 
 <script>
+	var initialEnergy = getTotalEnergy(sim);
 	cue(function() {
 		var energy = getTotalEnergy(sim);
-		return (energy > 2);
+		return (energy > initialEnergy + 20);
 	});
 	endStep();
 </script>
