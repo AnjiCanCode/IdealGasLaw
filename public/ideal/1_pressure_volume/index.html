@@ -66,11 +66,7 @@
 			setBoxWidth(sim, value);
 			setWallsAlongBorder(sim);
 			
-			// Visually resize the canvas so the 'box' itself shrinks, maintaining aspect ratio for particles
-			var newWidth = sim.pixelWidth * (value / 100);
-			sim.canvas.style.width = newWidth + "px";
-			sim.canvas.width = newWidth * (window.devicePixelRatio || 1);
-			sim.canvas.height = sim.canvas.width * (sim.boxBounds.height / sim.boxBounds.width);
+			// Update the renderer to match the new box dimensions
 			copyRectangle(sim.renderer.bounds, sim.boxBounds);
 			updateRendererBounds(sim.renderer);
 		},

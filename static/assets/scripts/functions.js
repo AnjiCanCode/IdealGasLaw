@@ -2621,11 +2621,19 @@ function setWallsAlongBorder(simulation)
         v2(b.left, b.top),
     ];
 
-    simulation.walls = [];
-    for (var i = 0; i < corners.length; i++)
-    {
-        var wall = new Wall(corners[i], corners[(i + 1) % corners.length]);
-        simulation.walls.push(wall);
+    if (!simulation.walls || simulation.walls.length !== corners.length) {
+        simulation.walls = [];
+        for (var i = 0; i < corners.length; i++) {
+            var wall = new Wall(corners[i], corners[(i + 1) % corners.length]);
+            simulation.walls.push(wall);
+        }
+    } else {
+        for (var i = 0; i < corners.length; i++) {
+            var wall = simulation.walls[i];
+            v2.copy(wall.vertices[0], corners[i]);
+            v2.copy(wall.vertices[1], corners[(i + 1) % corners.length]);
+            // Preserve wall.force
+        }
     }
 }
 
@@ -2934,13 +2942,16 @@ function createSimulation(opts)
 
     function pauseIfHidden(event)
     {
-        // TODO: maybe just keep one playing at a time, the one we are scrolling towards
         var divBounds = simulation.div.getBoundingClientRect();
+
+        // If bounds are all zero, it's likely still initializing. Don't pause.
+        if (divBounds.width === 0 && divBounds.height === 0) {
+            return; 
+        }
 
         var isAboveViewport = divBounds.bottom < 0;
         var isBelowViewport = divBounds.top > window.innerHeight;
-
-        var isAutoPaused = document.hidden;
+        var isAutoPaused = document.hidden || isAboveViewport || isBelowViewport;
 
         if (isAutoPaused)
         {
@@ -2955,6 +2966,7 @@ function createSimulation(opts)
             if (simulation.requestFrameId === null)
             {
                 simulation.isFirstFrameAfterPause = true;
+                simulation.previousTimestamp = performance.now();
                 simulation.requestFrameId = window.requestAnimationFrame(simulation.updateFunction);
             }
         }
@@ -3342,14 +3354,17 @@ var updateSimulation = function()
 
             var dt = params.dt;
 
-            var elapsedSeconds = (timestamp - simulation.previousTimestamp) / 1000;
+            var elapsedSeconds = 0;
+            if (simulation.previousTimestamp !== undefined) {
+                elapsedSeconds = (timestamp - simulation.previousTimestamp) / 1000;
+            }
 
             // NOTE: attempt to avoid stalls by limiting max frame time
             elapsedSeconds = atMost(1 / 30, elapsedSeconds);
 
             simulation.previousTimestamp = timestamp;
 
-            if (simulation.isFirstFrameAfterPause)
+            if (simulation.isFirstFrameAfterPause || isNaN(elapsedSeconds))
             {
                 simulation.isFirstFrameAfterPause = false;
                 elapsedSeconds = dt / params.simulationTimePerSecond;
