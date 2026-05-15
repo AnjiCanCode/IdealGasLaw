@@ -2077,6 +2077,10 @@ addColor("black", [0, 0, 0, 1]);
 addColor("white", [1, 1, 1, 1]);
 addColor("gray", [0.5, 0.5, 0.5, 1]);
 addColor("transparent", [0, 0, 0, 0]);
+addColor("aquamarine", [0.498, 1, 0.831, 1]);
+addColor("coral", [1, 0.498, 0.314, 1]);
+addColor("amber", [1, 0.75, 0, 1]);
+addColor("cyan", [0, 1, 1, 1]);
 
 
 // inject these colors as class css
