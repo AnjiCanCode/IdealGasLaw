@@ -55,6 +55,17 @@ title: "What is a Gas?"
 
 <p>More particles → more wall collisions → <strong>higher pressure</strong>.</p>
 
+<p>Alternatively, you can increase pressure by injecting energy. Try <strong>Resetting</strong> the simulation, then use the move tool to grab a particle and <strong>throw it around very fast</strong>.</p>
+
+<script>
+	cue(function() {
+		return (sim.mouse.mode === MouseMode.move && getTotalPressure(sim) > 30);
+	});
+	endStep();
+</script>
+
+<p>By moving the particle faster, you increase its <strong>momentum</strong>, leading to more forceful collisions with the walls.</p>
+
 <p>This is the fundamental insight: macroscopic properties like pressure emerge from the collective behavior of many tiny particles. The <strong>ideal gas law</strong> captures this relationship mathematically.</p>
 
 <p style="margin-top: 3rem; color: var(--text-muted); font-size: 0.9rem; font-style: italic;">
