@@ -3086,6 +3086,12 @@ function resetSimulation(simulation)
         setWallsAlongBorder(simulation);    
     }
 
+    // Ensure the renderer perfectly matches the box bounds after user initialization
+    if (simulation.renderer) {
+        copyRectangle(simulation.renderer.bounds, simulation.boxBounds);
+        updateRendererBounds(simulation.renderer);
+    }
+
     // ! Measurements
 
     var totalRegion = createMeasurementRegion();
