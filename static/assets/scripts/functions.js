@@ -2581,16 +2581,21 @@ function createIceMudSliderHere()
 
 function fillBoxWithParticles(simulation, count, temperature) {
     var b = simulation.boxBounds;
-    var padding = 1.5;
-    var area = (b.width - 2 * padding) * (b.height - 2 * padding);
+    var padding = 2.0; // Slightly more padding to avoid wall overlaps
+    var netWidth = b.width - 2 * padding;
+    var netHeight = b.height - 2 * padding;
+    var area = netWidth * netHeight;
+    
+    // Calculate a good grid
     var spacing = Math.sqrt(area / count);
-    var cols = Math.floor((b.width - 2 * padding) / spacing);
+    var cols = Math.floor(netWidth / spacing);
+    if (cols < 1) cols = 1;
     var rows = Math.ceil(count / cols);
     
-    // Adjust spacing to fit
-    var dx = (b.width - 2 * padding) / cols;
-    var dy = (b.height - 2 * padding) / rows;
+    var dx = netWidth / cols;
+    var dy = netHeight / rows;
 
+    var added = 0;
     var speedScale = Math.sqrt(temperature || 5);
 
     for (var i = 0; i < count; i++) {
@@ -2598,13 +2603,22 @@ function fillBoxWithParticles(simulation, count, temperature) {
         var row = Math.floor(i / cols);
         
         var particle = new Particle();
-        // Jittered grid placement
-        particle.position[0] = b.left + padding + (col + 0.5) * dx + (Math.random() - 0.5) * dx * 0.2;
-        particle.position[1] = b.bottom + padding + (row + 0.5) * dy + (Math.random() - 0.5) * dy * 0.2;
+        // Deterministic grid placement for perfect comparison
+        particle.position[0] = b.left + padding + (col + 0.5) * dx;
+        particle.position[1] = b.bottom + padding + (row + 0.5) * dy;
         
-        v2.set(particle.velocity, randomGaussian(), randomGaussian());
-        v2.scale(particle.velocity, particle.velocity, speedScale);
-        addParticle(simulation, particle);
+        // Use a consistent initial velocity distribution
+        // This helps prevent the initial 'spike' by not having them all collide at once
+        var angle = (i / count) * tau * 7.31; // Deterministic pseudo-randomness
+        v2.setPolar(particle.velocity, speedScale, angle);
+        
+        if (addParticle(simulation, particle)) {
+            added++;
+        }
+    }
+    
+    if (added < count) {
+        console.warn("Requested " + count + " particles, but only added " + added + " (is the box too small?)");
     }
 }
 
