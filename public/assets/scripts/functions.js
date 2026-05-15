@@ -1900,6 +1900,7 @@ function createTimeSeries(opts)
         }),
         yMin: opts.yMin,
         yMax: opts.yMax,
+        colors: opts.colors || [],
         update: opts.update,
         updater: null,
         div: null,
@@ -1916,7 +1917,8 @@ function createTimeSeries(opts)
             addCurve(timeSeries.graph,
             {
                 x: timeSeries.timeLog.time,
-                y: values
+                y: values,
+                color: timeSeries.colors[key] || Color.white
             });
         }
         addAxes(timeSeries.graph,
@@ -2075,6 +2077,7 @@ addColor("purple", [1, 0, 1, 1]);
 addColor("black", [0, 0, 0, 1]);
 addColor("white", [1, 1, 1, 1]);
 addColor("gray", [0.5, 0.5, 0.5, 1]);
+addColor("aquamarine", [0.49, 1, 0.83, 1]);
 addColor("transparent", [0, 0, 0, 0]);
 
 

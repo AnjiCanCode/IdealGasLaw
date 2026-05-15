@@ -35,14 +35,7 @@
 			setBoxWidth(simulation, 80);
 			setWallsAlongBorder(simulation);
 
-			var particleCount = 80;
-			for (var i = 0; i < particleCount; i++) {
-				var particle = new Particle();
-				randomDiscInRect(particle.position, particle.radius, simulation.boxBounds);
-				v2.set(particle.velocity, randomGaussian(), randomGaussian());
-				v2.scale(particle.velocity, particle.velocity, 2.5);
-				addParticle(simulation, particle);
-			}
+			fillBoxWithParticles(simulation, 80, 5);
 
 			setToolbarAvailableTools(simulation.toolbar, ["move"]);
         },
@@ -53,9 +46,13 @@
 
 <p>Temperature isn't some mysterious abstract quantity. It's simply a measure of <strong>how fast the particles are moving</strong>.</p>
 
-<div class="equation">T = ⅔ × (average kinetic energy) / k<sub>B</sub></div>
+<div class="equation">T = ⅔ × (E<sub>avg</sub> / k<sub>B</sub>)</div>
 
-<p>Each particle has kinetic energy = ½mv². Temperature is just the <strong>average</strong> of all these energies.</p>
+<p>Each particle has kinetic energy (½mv²). Temperature is the <strong>average</strong> energy of all particles, adjusted by two constants:</p>
+<ul>
+  <li><strong>k<sub>B</sub></strong> (Boltzmann constant) scales energy into Kelvin units.</li>
+  <li><strong>⅔</strong> comes from the fact that particles can move in three directions (up/down, left/right, back/forward).</li>
+</ul>
 
 <p>The graph on the right shows the average kinetic energy (proportional to temperature). Use the slider below to change the thermostat temperature.</p>
 
