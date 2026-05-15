@@ -1971,7 +1971,7 @@ function getTotalPressure(simulation)
     v2.free(wallVector);
 
     if (totalPerimeter === 0) return 0;
-    return (totalForce / totalPerimeter) * 60;
+    return (totalForce / totalPerimeter) * 120;
 }
 
 function getTotalTemperature(simulation)
@@ -3021,7 +3021,7 @@ function resetSimulation(simulation)
     p.measurementWindowLength = 100;
     p.measurementEnabled = true;
     p.pressureWindowSize = 1000;
-    p.pressureSmoothingTime = 4.0;
+    p.pressureSmoothingTime = 6.0;
     p.displayWallPressure = false;
 
     // forces
