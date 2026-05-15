@@ -2984,6 +2984,9 @@ function createSimulation(opts)
 
     simulation.requestFrameId = window.requestAnimationFrame(simulation.updateFunction);
 
+    // Jumpstart the simulation if we are already visible
+    pauseIfHidden();
+
     return simulation;
 }
 
