@@ -26,23 +26,13 @@ title: "Pressure & Temperature"
 			setToolbarAvailableTools(simulation.toolbar, ["move"]);
         },
     });
-
-	insertHere(sim.div);
-
-	createTimeSeriesHere({
-		timeRange: 80,
-		yMax: 60,
-		update: function(graph) {
-			return {time: sim.time, data: [getTotalPressure(sim)]};
-		},
-	});
 </script>
 
 <h2>Pressure & Temperature: Gay-Lussac's Law</h2>
 
 <p>Now let's keep the volume fixed and change the <strong>temperature</strong> instead.</p>
 
-<p>Temperature controls how fast the particles move. Use the slider to crank up the heat.</p>
+<p>Temperature controls how fast the particles move. Use the slider below to crank up the heat.</p>
 
 <script>
 	createSliderHere({
@@ -88,5 +78,16 @@ title: "Pressure & Temperature"
 
 </div>
 <div class="twoColumn">
+<script>
+	insertHere(sim.div);
+
+	createTimeSeriesHere({
+		timeRange: 80,
+		yMax: 60,
+		update: function(graph) {
+			return {time: sim.time, data: [getTotalPressure(sim)]};
+		},
+	});
+</script>
 </div>
 </div>

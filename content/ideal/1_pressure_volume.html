@@ -25,16 +25,6 @@ title: "Pressure & Volume"
         },
     });
 
-	insertHere(sim.div);
-
-	createTimeSeriesHere({
-		timeRange: 80,
-		yMax: 60,
-		update: function(graph) {
-			return {time: sim.time, data: [getTotalPressure(sim)]};
-		},
-	});
-
     var currentBoxWidth = 100;
 </script>
 
@@ -96,5 +86,16 @@ title: "Pressure & Volume"
 
 </div>
 <div class="twoColumn">
+<script>
+	insertHere(sim.div);
+
+	createTimeSeriesHere({
+		timeRange: 80,
+		yMax: 60,
+		update: function(graph) {
+			return {time: sim.time, data: [getTotalPressure(sim)]};
+		},
+	});
+</script>
 </div>
 </div>

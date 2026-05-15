@@ -22,7 +22,7 @@ title: "Free Exploration"
 				var particle = new Particle();
 				randomDiscInRect(particle.position, particle.radius, simulation.boxBounds);
 				v2.set(particle.velocity, randomGaussian(), randomGaussian());
-				v2.scale(particle.velocity, particle.velocity, 1.5);
+				v2.scale(particle.velocity, particle.velocity, 2);
 				addParticle(simulation, particle);
 			}
 
@@ -49,7 +49,8 @@ title: "Free Exploration"
 			// Visually resize the canvas
 			var newWidth = sim.pixelWidth * (value / 80);
 			sim.canvas.style.width = newWidth + "px";
-			sim.canvas.width = newWidth * sim.renderer.devicePixelRatio;
+			sim.canvas.width = newWidth * (window.devicePixelRatio || 1);
+			sim.canvas.height = sim.canvas.width * (sim.boxBounds.height / sim.boxBounds.width);
 			copyRectangle(sim.renderer.bounds, sim.boxBounds);
 			updateRendererBounds(sim.renderer);
 		},
@@ -106,29 +107,7 @@ title: "Free Exploration"
 	});
 </script>
 
-<h3>Pressure</h3>
-<script>
-	createTimeSeriesHere({
-		timeRange: 100,
-		yMax: 40,
-		update: function(graph) {
-			return {time: sim.time, data: [getTotalPressure(sim)]};
-		},
-	});
-</script>
-
-<h3>Temperature (measured)</h3>
-<script>
-	createTimeSeriesHere({
-		timeRange: 100,
-		yMax: 30,
-		update: function(graph) {
-			return {time: sim.time, data: [getTotalTemperature(sim)]};
-		},
-	});
-</script>
-
-<p style="margin-top: 24px; color: var(--text-muted); font-size: 14px;">Use all the tools, move, create, attract, repel, delete, and all the sliders to explore the full range of gas behavior. See if you can:</p>
+<p style="margin-top: 24px; color: var(--text-muted); font-size: 14px;">Use all the tools (move, create, attract, repel, delete) and the sliders to explore gas behavior. See if you can:</p>
 
 <ul style="color: var(--text-muted); font-size: 14px;">
   <li>Make the gas condense into a liquid</li>
@@ -141,6 +120,22 @@ title: "Free Exploration"
 <div class="twoColumn">
 <script>
 	insertHere(sim.div);
+
+	createTimeSeriesHere({
+		timeRange: 100,
+		yMax: 60,
+		update: function(graph) {
+			return {time: sim.time, data: [getTotalPressure(sim)]};
+		},
+	});
+
+	createTimeSeriesHere({
+		timeRange: 100,
+		yMax: 40,
+		update: function(graph) {
+			return {time: sim.time, data: [getTotalTemperature(sim)]};
+		},
+	});
 </script>
 </div>
 </div>

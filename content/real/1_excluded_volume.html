@@ -19,7 +19,7 @@ title: "Excluded Volume"
 				var particle = new Particle();
 				randomDiscInRect(particle.position, particle.radius, simulation.boxBounds);
 				v2.set(particle.velocity, randomGaussian(), randomGaussian());
-				v2.scale(particle.velocity, particle.velocity, 1.5);
+				v2.scale(particle.velocity, particle.velocity, 2);
 				addParticle(simulation, particle);
 			}
 
@@ -43,7 +43,7 @@ title: "Excluded Volume"
 	endStep();
 </script>
 
-<p>Now <strong>shrink the box</strong>.</p>
+<p>Now <strong>shrink the box</strong> using the slider below.</p>
 
 <script>
 	createSliderHere({
@@ -59,7 +59,8 @@ title: "Excluded Volume"
 			// Visually resize the canvas
 			var newWidth = sim.pixelWidth * (value / 80);
 			sim.canvas.style.width = newWidth + "px";
-			sim.canvas.width = newWidth * sim.renderer.devicePixelRatio;
+			sim.canvas.width = newWidth * (window.devicePixelRatio || 1);
+			sim.canvas.height = sim.canvas.width * (sim.boxBounds.height / sim.boxBounds.width);
 			copyRectangle(sim.renderer.bounds, sim.boxBounds);
 			updateRendererBounds(sim.renderer);
 		},
@@ -73,9 +74,21 @@ title: "Excluded Volume"
 	endStep();
 </script>
 
-<p>At high density, the particles are <strong>jammed together</strong>. They can't overlap, each one occupies space that is unavailable to the others.</p>
+<p>At high density, the particles are <strong>jammed together</strong>. They can't overlap; each one occupies space that is unavailable to the others.</p>
 
+<p>The pressure is <strong>much higher</strong> than the ideal gas law would predict. The <em>effective</em> volume available to each particle is less than V because the other particles are in the way.</p>
+
+<p>This is the <strong>excluded volume</strong> effect. The correction parameter <em>b</em> in the van der Waals equation accounts for this. The actual free volume is <em>V - nb</em>, where <em>n</em> is the number of particles.</p>
+
+<div class="equation">V<sub>effective</sub> = V − nb</div>
+
+<p>At low density (big box), this correction barely matters. But cram the particles together and it dominates!</p>
+
+</div>
+<div class="twoColumn">
 <script>
+	insertHere(sim.div);
+
 	createTimeSeriesHere({
 		timeRange: 80,
 		yMax: 80,
@@ -83,21 +96,6 @@ title: "Excluded Volume"
 			return {time: sim.time, data: [getTotalPressure(sim)]};
 		},
 	});
-</script>
-
-<p>The pressure is <strong>much higher</strong> than the ideal gas law would predict. The <em>effective</em> volume available to each particle is less than V because the other particles are in the way.</p>
-
-<p>This is the <strong>excluded volume</strong> effect, the correction parameter <em>b</em> in the van der Waals equation accounts for this. The actual free volume is V - nb, where n is the number of particles.</p>
-
-<div class="equation">V<sub>effective</sub> = V − nb</div>
-
-<p>At low density (big box), this correction barely matters. But cram the particles together and it dominates!</p>
-
-
-</div>
-<div class="twoColumn">
-<script>
-	insertHere(sim.div);
 </script>
 </div>
 </div>

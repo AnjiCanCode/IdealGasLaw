@@ -36,9 +36,9 @@ title: "Intermolecular Attraction"
 
 <p>The second way real gases differ from ideal: molecules <strong>attract each other</strong> through van der Waals forces.</p>
 
-<p>Watch the particles, they tend to <strong>cluster</strong> slightly. They're not completely independent like ideal gas particles.</p>
+<p>Watch the particles on the right; they tend to <strong>cluster</strong> slightly. They're not completely independent like ideal gas particles.</p>
 
-<p>Use the slider to change the <strong>attraction strength</strong>.</p>
+<p>Use the slider below to change the <strong>attraction strength</strong>.</p>
 
 <script>
 	createSliderHere({
@@ -66,17 +66,7 @@ title: "Intermolecular Attraction"
 
 <p>Strong attraction causes the particles to <strong>clump together</strong>. The gas starts to condense!</p>
 
-<script>
-	createTimeSeriesHere({
-		timeRange: 80,
-		yMax: 20,
-		update: function(graph) {
-			return {time: sim.time, data: [getTotalPressure(sim)]};
-		},
-	});
-</script>
-
-<p>Notice the pressure is <strong>lower</strong> than you'd expect. Why? Because particles that are being pulled back by their neighbors hit the walls with <strong>less force</strong>.</p>
+<p>Notice the pressure on the graph is <strong>lower</strong> than you'd expect. Why? Because particles that are being pulled back by their neighbors hit the walls with <strong>less force</strong>.</p>
 
 <p>Now turn attraction to zero.</p>
 
@@ -95,11 +85,18 @@ title: "Intermolecular Attraction"
 
 <p>At high temperature, particles move too fast for attractions to matter. At low temperature, attractions dominate and can even cause <strong>liquefaction</strong>.</p>
 
-
 </div>
 <div class="twoColumn">
 <script>
 	insertHere(sim.div);
+
+	createTimeSeriesHere({
+		timeRange: 80,
+		yMax: 40,
+		update: function(graph) {
+			return {time: sim.time, data: [getTotalPressure(sim)]};
+		},
+	});
 </script>
 </div>
 </div>

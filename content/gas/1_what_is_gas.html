@@ -24,16 +24,6 @@ title: "What is a Gas?"
 			setToolbarAvailableTools(simulation.toolbar, ["move", "create"]);
         },
     });
-
-	insertHere(sim.div);
-
-	createTimeSeriesHere({
-		timeRange: 80,
-		yMax: 60,
-		update: function(graph) {
-			return {time: sim.time, data: [getTotalPressure(sim)]};
-		},
-	});
 </script>
 
 <h2>Gas Basics: Particles in Motion</h2>
@@ -51,7 +41,7 @@ title: "What is a Gas?"
 	endStep();
 </script>
 
-<p>The graph above shows the <strong>pressure</strong> on the walls. Every time a particle bounces off a wall, it pushes on it. The combined effect of countless tiny pushes is what we call pressure.</p>
+<p>The graph on the right shows the <strong>pressure</strong> on the walls. Every time a particle bounces off a wall, it pushes on it. The combined effect of countless tiny pushes is what we call pressure.</p>
 
 <p>Try <strong>adding more particles</strong> with the create tool and watch what happens to the pressure.</p>
 
@@ -83,5 +73,16 @@ title: "What is a Gas?"
 
 </div>
 <div class="twoColumn">
+<script>
+	insertHere(sim.div);
+
+	createTimeSeriesHere({
+		timeRange: 80,
+		yMax: 60,
+		update: function(graph) {
+			return {time: sim.time, data: [getTotalPressure(sim)]};
+		},
+	});
+</script>
 </div>
 </div>
