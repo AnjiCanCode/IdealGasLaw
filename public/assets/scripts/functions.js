@@ -1900,7 +1900,6 @@ function createTimeSeries(opts)
         }),
         yMin: opts.yMin,
         yMax: opts.yMax,
-        colors: opts.colors || [],
         update: opts.update,
         updater: null,
         div: null,
@@ -1917,8 +1916,7 @@ function createTimeSeries(opts)
             addCurve(timeSeries.graph,
             {
                 x: timeSeries.timeLog.time,
-                y: values,
-                color: timeSeries.colors[key] || Color.white
+                y: values
             });
         }
         addAxes(timeSeries.graph,
@@ -1958,30 +1956,7 @@ function getTotalEnergy(simulation)
     }, 0);
 }
 
-function createLegendHere(items) {
-    var legend = createElement("div");
-    legend.className = "graphLegend";
-    
-    items.forEach(function(item) {
-        var entry = createElement("div");
-        entry.className = "legendEntry";
-        
-        var colorBox = createElement("div");
-        colorBox.className = "legendColor";
-        colorBox.style.backgroundColor = item.color.css;
-        
-        var label = createElement("span");
-        label.className = "legendLabel";
-        label.textContent = item.label;
-        
-        entry.appendChild(colorBox);
-        entry.appendChild(label);
-        legend.appendChild(entry);
-    });
-    
-    insertHere(legend);
-    return legend;
-}
+function getTotalPressure(simulation)
 {
     var wallVector = v2.alloc();
     var totalForce = 0;
@@ -2100,7 +2075,6 @@ addColor("purple", [1, 0, 1, 1]);
 addColor("black", [0, 0, 0, 1]);
 addColor("white", [1, 1, 1, 1]);
 addColor("gray", [0.5, 0.5, 0.5, 1]);
-addColor("aquamarine", [0.49, 1, 0.83, 1]);
 addColor("transparent", [0, 0, 0, 0]);
 
 
@@ -2572,18 +2546,15 @@ function createIceMudSliderHere()
 
 function fillBoxWithParticles(simulation, count, temperature) {
     var b = simulation.boxBounds;
-    var padding = 2.5; // Increased padding for safety
-    var availWidth = b.width - 2 * padding;
-    var availHeight = b.height - 2 * padding;
-    
-    var area = availWidth * availHeight;
+    var padding = 1.5;
+    var area = (b.width - 2 * padding) * (b.height - 2 * padding);
     var spacing = Math.sqrt(area / count);
-    
-    var cols = Math.max(1, Math.floor(availWidth / spacing));
+    var cols = Math.floor((b.width - 2 * padding) / spacing);
     var rows = Math.ceil(count / cols);
     
-    var dx = availWidth / cols;
-    var dy = availHeight / rows;
+    // Adjust spacing to fit
+    var dx = (b.width - 2 * padding) / cols;
+    var dy = (b.height - 2 * padding) / rows;
 
     var speedScale = Math.sqrt(temperature || 5);
 
@@ -2592,20 +2563,13 @@ function fillBoxWithParticles(simulation, count, temperature) {
         var row = Math.floor(i / cols);
         
         var particle = new Particle();
-        // Strictly deterministic grid (no jitter) for perfect comparison
-        particle.position[0] = b.left + padding + (col + 0.5) * dx;
-        particle.position[1] = b.bottom + padding + (row + 0.5) * dy;
+        // Jittered grid placement
+        particle.position[0] = b.left + padding + (col + 0.5) * dx + (Math.random() - 0.5) * dx * 0.2;
+        particle.position[1] = b.bottom + padding + (row + 0.5) * dy + (Math.random() - 0.5) * dy * 0.2;
         
-        // Use deterministic-ish random for velocities if possible, 
-        // but simple random is fine if positions are identical.
         v2.set(particle.velocity, randomGaussian(), randomGaussian());
         v2.scale(particle.velocity, particle.velocity, speedScale);
-        
-        if (!addParticle(simulation, particle)) {
-            // Fallback: try to nudge if it failed
-            particle.position[0] += 0.1;
-            addParticle(simulation, particle);
-        }
+        addParticle(simulation, particle);
     }
 }
 

@@ -37,7 +37,14 @@
 			setBoxWidth(simulation, 60);
 			setWallsAlongBorder(simulation);
 
-			fillBoxWithParticles(simulation, 80, 10);
+			var particleCount = 80;
+			for (var i = 0; i < particleCount; i++) {
+				var particle = new Particle();
+				randomDiscInRect(particle.position, particle.radius, simulation.boxBounds);
+				v2.set(particle.velocity, randomGaussian(), randomGaussian());
+				v2.scale(particle.velocity, particle.velocity, 2);
+				addParticle(simulation, particle);
+			}
 			setToolbarAvailableTools(simulation.toolbar, ["move"]);
         },
     });
@@ -52,7 +59,13 @@
 			setBoxWidth(simulation, 60);
 			setWallsAlongBorder(simulation);
 
-			fillBoxWithParticles(simulation, 80, 10);
+			var particleCount = 80;
+			var particles = [];
+			for (var i = 0; i < particleCount; i++) {
+				var particle = new Particle();
+				particles.push(particle);
+			}
+			addParticlesRandomlyAround(simulation, particles, v2(0, 0));
 
 			var ljInteraction = new LennardJonesInteraction();
 			ljInteraction.strength = 5;
@@ -123,15 +136,9 @@
 	insertHere(idealSim.div);
 	insertHere(realSim.div);
 
-	createLegendHere([
-		{ label: "Ideal Gas", color: Color.gray },
-		{ label: "Real Gas", color: Color.aquamarine }
-	]);
-
 	createTimeSeriesHere({
 		timeRange: 100,
 		yMax: 120,
-		colors: [Color.gray, Color.aquamarine],
 		update: function(graph) {
 			var idealP = getTotalPressure(idealSim);
 			var realP = getTotalPressure(realSim);
