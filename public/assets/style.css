@@ -108,22 +108,16 @@ header {
 }
 
 .isInternal .wrapper {
-  position: absolute;
-  top: 0;
-  width: 100%;
   border-bottom: none;
   background: transparent;
-  pointer-events: none;
 }
 
 .isInternal header {
   justify-content: flex-start;
-  padding-left: var(--page-padding);
-  pointer-events: none;
+  padding: 0 0 8px 0;
 }
 
 .isInternal header .siteTitle {
-  pointer-events: auto;
   font-size: 14px;
   color: var(--text-muted);
   opacity: 0.6;
@@ -153,12 +147,16 @@ header .siteTitle:hover {
    ═══════════════════════════════════════ */
 
 nav {
-  padding-bottom: 16px;
-  margin-bottom: 8px;
+  padding-bottom: 8px;
+  margin-bottom: 4px;
   display: flex;
   align-items: baseline;
   gap: 12px;
   border-bottom: 1px solid var(--border-subtle);
+}
+
+.isInternal nav {
+  border-bottom: none;
 }
 
 nav h1 {
@@ -218,11 +216,11 @@ nav h1 a:hover {
 
 #content {
   width: var(--content-width);
-  padding: 30px var(--page-padding);
+  padding: 0 var(--page-padding);
 }
 
 .isInternal #content {
-  padding-top: 60px; /* Make room for the absolute header */
+  padding-top: 20px;
 }
 
 /* ═══════════════════════════════════════

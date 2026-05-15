@@ -1490,7 +1490,7 @@ function createGraph(opts)
     var canvas = createAndAppend("canvas", graph.div);
     graph.div.classList.add("graph");
     canvas.width = 450;
-    canvas.height = 140;
+    canvas.height = 250;
 
     graph.renderer = createRenderer(canvas);
 
@@ -4535,3 +4535,26 @@ function shortestVectorFromLine(result, point, lineStart, lineEnd)
 
 
 
+
+// ! Layout Fix: Add Home button and clean up internal layout
+window.addEventListener("DOMContentLoaded", function() {
+    if (document.body.classList.contains("isInternal")) {
+        var leftColumn = document.querySelector(".page .twoColumn:first-child");
+        
+        if (leftColumn) {
+            // Add Home Button
+            var homeBtn = document.createElement("a");
+            homeBtn.href = "/";
+            homeBtn.innerHTML = "⌂";
+            homeBtn.className = "homeButton";
+            homeBtn.title = "Return Home";
+            leftColumn.insertBefore(homeBtn, leftColumn.firstChild);
+
+            // Move navBar if it exists
+            var navBar = document.getElementById("navBar");
+            if (navBar) {
+                leftColumn.insertBefore(navBar, homeBtn.nextSibling);
+            }
+        }
+    }
+});
