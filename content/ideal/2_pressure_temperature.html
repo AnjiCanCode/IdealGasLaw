@@ -62,7 +62,7 @@ title: "Pressure & Temperature"
 <script>
 	createTimeSeriesHere({
 		timeRange: 80,
-		yMax: 30,
+		yMax: 100,
 		update: function(graph) {
 			return {time: sim.time, data: [getTotalPressure(sim)]};
 		},

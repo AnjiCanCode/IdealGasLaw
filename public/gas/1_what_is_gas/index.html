@@ -39,7 +39,7 @@
 				var particle = new Particle();
 				randomDiscInRect(particle.position, particle.radius, simulation.boxBounds);
 				v2.set(particle.velocity, randomGaussian(), randomGaussian());
-				v2.scale(particle.velocity, particle.velocity, 2);
+				v2.scale(particle.velocity, particle.velocity, 4);
 				addParticle(simulation, particle);
 			}
 
@@ -57,7 +57,7 @@
 <script>
 	createTimeSeriesHere({
 		timeRange: 80,
-		yMax: 20,
+		yMax: 60,
 		update: function(graph) {
 			return {time: sim.time, data: [getTotalPressure(sim)]};
 		},

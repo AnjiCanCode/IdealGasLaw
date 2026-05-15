@@ -3021,7 +3021,7 @@ function resetSimulation(simulation)
     p.measurementWindowLength = 100;
     p.measurementEnabled = true;
     p.pressureWindowSize = 1000;
-    p.pressureSmoothingTime = 6.0;
+    p.pressureSmoothingTime = 7.0;
     p.displayWallPressure = false;
 
     // forces
