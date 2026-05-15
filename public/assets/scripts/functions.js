@@ -1971,7 +1971,7 @@ function getTotalPressure(simulation)
     v2.free(wallVector);
 
     if (totalPerimeter === 0) return 0;
-    return totalForce / totalPerimeter;
+    return (totalForce / totalPerimeter) * 20;
 }
 
 function getTotalTemperature(simulation)
@@ -3604,10 +3604,11 @@ var updateSimulation = function()
 
                 if (!params.isSlowCollisionEnabled)
                 {
-                    // reset wall forces
+                    // Exponential decay for time-averaged pressure measurement
+                    var pressureDecay = Math.exp(-dt / params.pressureSmoothingTime);
                     for (var wallIndex = 0; wallIndex < simulation.walls.length; wallIndex++) {
                         var wall = simulation.walls[wallIndex];
-                        v2.set(wall.force, 0, 0);
+                        v2.scale(wall.force, wall.force, pressureDecay);
                     }
 
                     // ! put particles in grid
@@ -3803,9 +3804,10 @@ var updateSimulation = function()
                                 particle.virial = virial;
 
                                 var forceFactor = -virial * invSquaredDistance;
+                                var smoothedForceFactor = forceFactor * (dt / params.pressureSmoothingTime);
 
                                 v2.scaleAndAdd(wall.force, wall.force, 
-                                    particleFromWall, forceFactor);
+                                    particleFromWall, smoothedForceFactor);
 
                                 v2.scaleAndAdd(particle.acceleration, particle.acceleration,
                                     particleFromWall, -forceFactor / particle.mass);
