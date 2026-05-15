@@ -77,6 +77,12 @@
 			currentBoxWidth = value;
 			setBoxWidth(sim, value);
 			setWallsAlongBorder(sim);
+			
+			// Visually resize the canvas
+			sim.canvas.width = sim.pixelWidth * (value / 80);
+			sim.canvas.style.width = sim.canvas.width + "px";
+			sim.renderer.bounds.width = value;
+			updateRendererBounds(sim.renderer);
 		},
 	});
 </script>
