@@ -3404,6 +3404,12 @@ var updateSimulation = function()
 
                 if (params.isSlowCollisionEnabled)
                 {
+                    // reset wall forces for this step
+                    for (var wallIndex = 0; wallIndex < simulation.walls.length; wallIndex++) {
+                        var wall = simulation.walls[wallIndex];
+                        v2.set(wall.force, 0, 0);
+                    }
+
                     var collisionPool = new Pool(createCollision);
                     var collisions = [];
                     var firstCollisions = [];
@@ -3496,6 +3502,14 @@ var updateSimulation = function()
                                 deltaVelocity, -restitutionFactor * velocityScalingFirst);
                             v2.scaleAndAdd(firstCollision.second.velocity, firstCollision.second.velocity,
                                 deltaVelocity, restitutionFactor * velocityScalingSecond);
+
+                            // Accumulate impulse onto wall.force for pressure measurement
+                            if (firstCollision.type == CollisionType.wallParticle)
+                            {
+                                var impulse = restitutionFactor * firstCollision.second.mass / dt;
+                                v2.scaleAndAdd(firstCollision.first.force, firstCollision.first.force,
+                                    deltaVelocity, impulse);
+                            }
 
                             // remove collisions for involved particles
 
