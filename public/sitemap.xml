@@ -4,8 +4,6 @@
   <url>
     <loc>//localhost:1313/</loc>
   </url><url>
-    <loc>//localhost:1313/categories/</loc>
-  </url><url>
     <loc>//localhost:1313/vanderwaals/1_corrections/</loc>
   </url><url>
     <loc>//localhost:1313/mixtures/1_dalton/</loc>
@@ -14,23 +12,11 @@
   </url><url>
     <loc>//localhost:1313/playground/1_explore/</loc>
   </url><url>
-    <loc>//localhost:1313/gas/</loc>
-  </url><url>
-    <loc>//localhost:1313/ideal/</loc>
-  </url><url>
     <loc>//localhost:1313/real/2_attraction/</loc>
-  </url><url>
-    <loc>//localhost:1313/intro/</loc>
-  </url><url>
-    <loc>//localhost:1313/kinetic/</loc>
-  </url><url>
-    <loc>//localhost:1313/mixtures/</loc>
   </url><url>
     <loc>//localhost:1313/mixtures/2_nonideal/</loc>
   </url><url>
     <loc>//localhost:1313/vanderwaals/2_phase_diagram/</loc>
-  </url><url>
-    <loc>//localhost:1313/playground/</loc>
   </url><url>
     <loc>//localhost:1313/ideal/2_pressure_temperature/</loc>
   </url><url>
@@ -40,13 +26,7 @@
   </url><url>
     <loc>//localhost:1313/ideal/3_pvnrt/</loc>
   </url><url>
-    <loc>//localhost:1313/real/</loc>
-  </url><url>
-    <loc>//localhost:1313/tags/</loc>
-  </url><url>
     <loc>//localhost:1313/kinetic/1_temperature_motion/</loc>
-  </url><url>
-    <loc>//localhost:1313/vanderwaals/</loc>
   </url><url>
     <loc>//localhost:1313/intro/1_welcome/</loc>
   </url><url>
