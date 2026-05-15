@@ -1971,7 +1971,7 @@ function getTotalPressure(simulation)
     v2.free(wallVector);
 
     if (totalPerimeter === 0) return 0;
-    return (totalForce / totalPerimeter) * 120;
+    return (totalForce / totalPerimeter) * 200;
 }
 
 function getTotalTemperature(simulation)
