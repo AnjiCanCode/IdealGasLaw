@@ -389,6 +389,9 @@ li {
 
 canvas {
   display: block;
+  max-width: 100%;
+  height: auto !important; /* Allow aspect ratio scaling if inline styles restrict it */
+  margin: 0 auto;
   border-radius: 8px;
   border: 1px solid var(--border-medium);
   background: var(--bg-card);

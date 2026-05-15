@@ -79,9 +79,10 @@
 			setWallsAlongBorder(sim);
 			
 			// Visually resize the canvas
-			sim.canvas.width = sim.pixelWidth * (value / 80);
-			sim.canvas.style.width = sim.canvas.width + "px";
-			sim.renderer.bounds.width = value;
+			var newWidth = sim.pixelWidth * (value / 80);
+			sim.canvas.style.width = newWidth + "px";
+			sim.canvas.width = newWidth * sim.renderer.devicePixelRatio;
+			copyRectangle(sim.renderer.bounds, sim.boxBounds);
 			updateRendererBounds(sim.renderer);
 		},
 	});
