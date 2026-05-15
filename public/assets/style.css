@@ -119,6 +119,11 @@ header {
   margin-bottom: 12px;
   transition: all var(--transition-fast);
   text-decoration: none !important;
+  opacity: 1 !important; /* Force visibility */
+}
+
+#navBar {
+  opacity: 1 !important; /* Force visibility */
 }
 
 .homeButton:hover {
