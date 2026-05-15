@@ -2581,9 +2581,17 @@ function createIceMudSliderHere()
 
 function fillBoxWithParticles(simulation, count, temperature) {
     var b = simulation.boxBounds;
-    var padding = 2.0; // Slightly more padding to avoid wall overlaps
+    var padding = 3.0; // Increased padding to be safely away from walls
     var netWidth = b.width - 2 * padding;
     var netHeight = b.height - 2 * padding;
+    
+    // Ensure we don't have negative net area
+    if (netWidth <= 0 || netHeight <= 0) {
+        padding = 1.0;
+        netWidth = b.width - 2 * padding;
+        netHeight = b.height - 2 * padding;
+    }
+
     var area = netWidth * netHeight;
     
     // Calculate a good grid
@@ -3105,7 +3113,7 @@ function resetSimulation(simulation)
 
     // time-related
     p.simulationTimePerSecond = 5;
-    p.dt = 0.005;
+    p.dt = 0.001; // Decreased for better stability in continuous sims
     p.simulationSpeed = 1;
 
     // TODO: begone!
@@ -3863,6 +3871,10 @@ var updateSimulation = function()
                                 // TODO: one loop for each interaction intead of one loop with a lot of ifs
 
                                 var forceFactor = -virial * invSquaredDistance;
+                                
+                                // Stability cap to prevent numerical explosions
+                                var maxForceFactor = 1000 / particle.mass;
+                                forceFactor = Math.max(-maxForceFactor, Math.min(maxForceFactor, forceFactor));
 
                                 v2.scaleAndAdd(particle.acceleration, particle.acceleration,
                                     relativePosition, forceFactor / particle.mass);
