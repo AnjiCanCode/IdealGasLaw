@@ -1960,17 +1960,18 @@ function getTotalEnergy(simulation)
 function getTotalPressure(simulation)
 {
     var wallVector = v2.alloc();
-    var pressure = 0;
+    var totalForce = 0;
+    var totalPerimeter = 0;
     for (var wallIndex = 0; wallIndex < simulation.walls.length; wallIndex++) {
         var wall = simulation.walls[wallIndex];
         v2.subtract(wallVector, wall.vertices[1], wall.vertices[0]);
-        var wallLength = v2.magnitude(wallVector);
-        var wallPressure = v2.magnitude(wall.force) / wallLength;
-        pressure += wallPressure;
+        totalPerimeter += v2.magnitude(wallVector);
+        totalForce += v2.magnitude(wall.force);
     }
     v2.free(wallVector);
 
-    return pressure;
+    if (totalPerimeter === 0) return 0;
+    return totalForce / totalPerimeter;
 }
 
 function getTotalTemperature(simulation)
@@ -3020,6 +3021,7 @@ function resetSimulation(simulation)
     p.measurementWindowLength = 100;
     p.measurementEnabled = true;
     p.pressureWindowSize = 1000;
+    p.pressureSmoothingTime = 2.0;
     p.displayWallPressure = false;
 
     // forces
@@ -3404,10 +3406,11 @@ var updateSimulation = function()
 
                 if (params.isSlowCollisionEnabled)
                 {
-                    // reset wall forces for this step
+                    // Exponential decay for time-averaged pressure measurement
+                    var pressureDecay = Math.exp(-dt / params.pressureSmoothingTime);
                     for (var wallIndex = 0; wallIndex < simulation.walls.length; wallIndex++) {
                         var wall = simulation.walls[wallIndex];
-                        v2.set(wall.force, 0, 0);
+                        v2.scale(wall.force, wall.force, pressureDecay);
                     }
 
                     var collisionPool = new Pool(createCollision);
@@ -3506,7 +3509,7 @@ var updateSimulation = function()
                             // Accumulate impulse onto wall.force for pressure measurement
                             if (firstCollision.type == CollisionType.wallParticle)
                             {
-                                var impulse = restitutionFactor * firstCollision.second.mass / dt;
+                                var impulse = restitutionFactor * firstCollision.second.mass / params.pressureSmoothingTime;
                                 v2.scaleAndAdd(firstCollision.first.force, firstCollision.first.force,
                                     deltaVelocity, impulse);
                             }
