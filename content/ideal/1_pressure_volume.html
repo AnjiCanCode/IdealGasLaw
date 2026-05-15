@@ -10,13 +10,14 @@ title: "Pressure & Volume"
 			var p = simulation.parameters;
 			p.isOnlyHardSpheres = true;
 			setBoxWidth(simulation, 100);
+			setWallsAlongBorder(simulation);
 
 			var particleCount = 150;
 			for (var i = 0; i < particleCount; i++) {
 				var particle = new Particle();
 				randomDiscInRect(particle.position, particle.radius, simulation.boxBounds);
 				v2.set(particle.velocity, randomGaussian(), randomGaussian());
-				v2.scale(particle.velocity, particle.velocity, 8);
+				v2.scale(particle.velocity, particle.velocity, 2);
 				addParticle(simulation, particle);
 			}
 

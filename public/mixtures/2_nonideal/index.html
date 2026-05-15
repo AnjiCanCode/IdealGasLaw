@@ -33,6 +33,7 @@
 			p.thermostatDeterministicStrength = 0.3;
 			p.thermostatTemperature = 8;
 			setBoxWidth(simulation, 80);
+			setWallsAlongBorder(simulation);
 
 			// Type A particles
 			var countA = 50;
@@ -41,7 +42,7 @@
 				particle.type = 0;
 				randomDiscInRect(particle.position, particle.radius, simulation.boxBounds);
 				v2.set(particle.velocity, randomGaussian(), randomGaussian());
-				v2.scale(particle.velocity, particle.velocity, 6);
+				v2.scale(particle.velocity, particle.velocity, 1.5);
 				addParticle(simulation, particle);
 			}
 
@@ -53,7 +54,7 @@
 				particle.color = Color.gray;
 				randomDiscInRect(particle.position, particle.radius, simulation.boxBounds);
 				v2.set(particle.velocity, randomGaussian(), randomGaussian());
-				v2.scale(particle.velocity, particle.velocity, 6);
+				v2.scale(particle.velocity, particle.velocity, 1.5);
 				addParticle(simulation, particle);
 			}
 
@@ -140,11 +141,7 @@
 </div>
 <div class="twoColumn">
 <script>
-	insertHere(sim.div);
-</script>
-</div>
-</div>
-
+	inser
 </div>
 
 	</div>

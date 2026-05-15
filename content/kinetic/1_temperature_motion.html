@@ -12,13 +12,14 @@ title: "Temperature is Motion"
 			p.thermostatDeterministicStrength = 1;
 			p.thermostatTemperature = 5;
 			setBoxWidth(simulation, 80);
+			setWallsAlongBorder(simulation);
 
 			var particleCount = 80;
 			for (var i = 0; i < particleCount; i++) {
 				var particle = new Particle();
 				randomDiscInRect(particle.position, particle.radius, simulation.boxBounds);
 				v2.set(particle.velocity, randomGaussian(), randomGaussian());
-				v2.scale(particle.velocity, particle.velocity, 5);
+				v2.scale(particle.velocity, particle.velocity, 1.25);
 				addParticle(simulation, particle);
 			}
 

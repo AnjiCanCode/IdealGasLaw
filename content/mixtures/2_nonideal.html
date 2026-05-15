@@ -11,6 +11,7 @@ title: "Non-Ideal Mixtures"
 			p.thermostatDeterministicStrength = 0.3;
 			p.thermostatTemperature = 8;
 			setBoxWidth(simulation, 80);
+			setWallsAlongBorder(simulation);
 
 			// Type A particles
 			var countA = 50;
@@ -19,7 +20,7 @@ title: "Non-Ideal Mixtures"
 				particle.type = 0;
 				randomDiscInRect(particle.position, particle.radius, simulation.boxBounds);
 				v2.set(particle.velocity, randomGaussian(), randomGaussian());
-				v2.scale(particle.velocity, particle.velocity, 6);
+				v2.scale(particle.velocity, particle.velocity, 1.5);
 				addParticle(simulation, particle);
 			}
 
@@ -31,7 +32,7 @@ title: "Non-Ideal Mixtures"
 				particle.color = Color.gray;
 				randomDiscInRect(particle.position, particle.radius, simulation.boxBounds);
 				v2.set(particle.velocity, randomGaussian(), randomGaussian());
-				v2.scale(particle.velocity, particle.velocity, 6);
+				v2.scale(particle.velocity, particle.velocity, 1.5);
 				addParticle(simulation, particle);
 			}
 

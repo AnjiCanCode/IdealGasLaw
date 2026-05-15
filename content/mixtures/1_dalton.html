@@ -10,6 +10,7 @@ title: "Dalton's Law"
 			var p = simulation.parameters;
 			p.isOnlyHardSpheres = true;
 			setBoxWidth(simulation, 80);
+			setWallsAlongBorder(simulation);
 
 			// Type A particles (default black)
 			var countA = 60;
@@ -18,7 +19,7 @@ title: "Dalton's Law"
 				particle.type = 0;
 				randomDiscInRect(particle.position, particle.radius, simulation.boxBounds);
 				v2.set(particle.velocity, randomGaussian(), randomGaussian());
-				v2.scale(particle.velocity, particle.velocity, 8);
+				v2.scale(particle.velocity, particle.velocity, 2);
 				addParticle(simulation, particle);
 			}
 
@@ -30,7 +31,7 @@ title: "Dalton's Law"
 				particle.color = Color.gray;
 				randomDiscInRect(particle.position, particle.radius, simulation.boxBounds);
 				v2.set(particle.velocity, randomGaussian(), randomGaussian());
-				v2.scale(particle.velocity, particle.velocity, 8);
+				v2.scale(particle.velocity, particle.velocity, 2);
 				addParticle(simulation, particle);
 			}
 

@@ -12,13 +12,14 @@ title: "PV = nRT"
 			p.thermostatDeterministicStrength = 1;
 			p.thermostatTemperature = 10;
 			setBoxWidth(simulation, 80);
+			setWallsAlongBorder(simulation);
 
 			var particleCount = 100;
 			for (var i = 0; i < particleCount; i++) {
 				var particle = new Particle();
 				randomDiscInRect(particle.position, particle.radius, simulation.boxBounds);
 				v2.set(particle.velocity, randomGaussian(), randomGaussian());
-				v2.scale(particle.velocity, particle.velocity, 6);
+				v2.scale(particle.velocity, particle.velocity, 1.5);
 				addParticle(simulation, particle);
 			}
 

@@ -29,7 +29,7 @@
 
 <div class="flex">
 
-  <div class="concept-card threeColumn">
+  <div class="concept-card threeColumn" style="text-align: center;">
     <h3>Ideal Gas</h3>
     <p>Tiny particles bouncing in a box, perfectly simple</p>
 
@@ -42,13 +42,14 @@
 			var p = simulation.parameters;
 			p.isOnlyHardSpheres = true;
 			setBoxWidth(simulation, 80);
+			setWallsAlongBorder(simulation);
 
 			var particleCount = 100;
 			for (var i = 0; i < particleCount; i++) {
 				var particle = new Particle();
 				randomDiscInRect(particle.position, particle.radius, simulation.boxBounds);
 				v2.set(particle.velocity, randomGaussian(), randomGaussian());
-				v2.scale(particle.velocity, particle.velocity, 8);
+				v2.scale(particle.velocity, particle.velocity, 2);
 				addParticle(simulation, particle);
 			}
 
@@ -60,7 +61,7 @@
 
   </div>
 
-  <div class="concept-card threeColumn">
+  <div class="concept-card threeColumn" style="text-align: center;">
     <h3>Real Gas</h3>
     <p>Particles that attract, repel, and take up space</p>
 
@@ -74,13 +75,14 @@
 			p.thermostatDeterministicStrength = 0.5;
 			p.thermostatTemperature = 3;
 			setBoxWidth(simulation, 60);
+			setWallsAlongBorder(simulation);
 
 			var particleCount = 80;
 			for (var i = 0; i < particleCount; i++) {
 				var particle = new Particle();
 				randomDiscInRect(particle.position, particle.radius, simulation.boxBounds);
 				v2.set(particle.velocity, randomGaussian(), randomGaussian());
-				v2.scale(particle.velocity, particle.velocity, 4);
+				v2.scale(particle.velocity, particle.velocity, 1);
 				addParticle(simulation, particle);
 			}
 
@@ -97,7 +99,7 @@
 
   </div>
 
-  <div class="concept-card threeColumn">
+  <div class="concept-card threeColumn" style="text-align: center;">
     <h3>Mixtures</h3>
     <p>Different particles, different rules</p>
 
@@ -110,16 +112,19 @@
 			var p = simulation.parameters;
 			p.isOnlyHardSpheres = true;
 			setBoxWidth(simulation, 80);
+			setWallsAlongBorder(simulation);
 
 			var particleCount = 50;
 			for (var i = 0; i < particleCount; i++) {
 				var particle = new Particle();
 				randomDiscInRect(particle.position, particle.radius, simulation.boxBounds);
 				v2.set(particle.velocity, randomGaussian(), randomGaussian());
-				v2.scale(particle.velocity, particle.velocity, 8);
+				v2.scale(particle.velocity, particle.velocity, 2);
 				particle.type = i % 2;
-				if (particle.type == 1) {
-					particle.color = Color.gray;
+				if (particle.type == 0) {
+					particle.color = Color.white;
+				} else {
+					particle.color = Color.red;
 				}
 				addParticle(simulation, particle);
 			}
