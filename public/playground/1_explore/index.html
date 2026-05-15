@@ -145,7 +145,7 @@
 
 	createTimeSeriesHere({
 		timeRange: 100,
-		yMax: 60,
+		yMax: 120,
 		update: function(graph) {
 			return {time: sim.time, data: [getTotalPressure(sim)]};
 		},
@@ -153,7 +153,7 @@
 
 	createTimeSeriesHere({
 		timeRange: 100,
-		yMax: 40,
+		yMax: 120,
 		update: function(graph) {
 			return {time: sim.time, data: [getTotalTemperature(sim)]};
 		},
