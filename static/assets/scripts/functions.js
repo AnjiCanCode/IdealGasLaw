@@ -1489,8 +1489,8 @@ function createGraph(opts)
     }
     var canvas = createAndAppend("canvas", graph.div);
     graph.div.classList.add("graph");
-    canvas.width = 400;
-    canvas.height = 200;
+    canvas.width = 450;
+    canvas.height = 140;
 
     graph.renderer = createRenderer(canvas);
 
@@ -2805,8 +2805,8 @@ function createSimulationHere(opts)
 function createSimulation(opts)
 {
     var simulation = {
-        pixelWidth: opts.pixelWidth || 400,
-        pixelHeight: opts.pixelHeight || 400,
+        pixelWidth: opts.pixelWidth || 450,
+        pixelHeight: opts.pixelHeight || 320,
 		worldWidth: opts.worldWidth || 20,
 		worldHeight: opts.worldHeight,
         initialize: opts.initialize,

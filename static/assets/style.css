@@ -101,34 +101,51 @@ a:hover {
 
 header {
   width: var(--content-width);
-  padding: 30px var(--page-padding);
+  padding: 10px var(--page-padding);
   display: flex;
+  justify-content: center;
   align-items: center;
-  gap: 16px;
+}
+
+.isInternal .wrapper {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  border-bottom: none;
+  background: transparent;
+  pointer-events: none;
+}
+
+.isInternal header {
+  justify-content: flex-start;
+  padding-left: var(--page-padding);
+  pointer-events: none;
+}
+
+.isInternal header .siteTitle {
+  pointer-events: auto;
+  font-size: 14px;
+  color: var(--text-muted);
+  opacity: 0.6;
+}
+
+.isInternal header .siteTitle:hover {
+  opacity: 1;
 }
 
 header .siteTitle {
-  font-size: 28px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 2px;
   text-decoration: none;
-  color: var(--aquamarine);
-  letter-spacing: -0.5px;
+  color: var(--text-muted);
   transition: all var(--transition-fast);
 }
 
 header .siteTitle:hover {
-  color: var(--turquoise);
-  text-shadow: 0 0 20px var(--aquamarine-glow);
-  text-decoration: none;
-}
-
-header .siteSubtitle {
-  font-size: 14px;
-  color: var(--text-muted);
-  font-weight: 300;
-  margin-left: 4px;
-  padding-left: 16px;
-  border-left: 1px solid var(--border-subtle);
+  color: var(--aquamarine);
+  text-shadow: 0 0 10px var(--aquamarine-glow);
 }
 
 /* ═══════════════════════════════════════
@@ -145,9 +162,9 @@ nav {
 }
 
 nav h1 {
-  font-size: 18px;
-  font-weight: 500;
-  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-muted);
   margin: 0;
 }
 
@@ -202,6 +219,10 @@ nav h1 a:hover {
 #content {
   width: var(--content-width);
   padding: 30px var(--page-padding);
+}
+
+.isInternal #content {
+  padding-top: 60px; /* Make room for the absolute header */
 }
 
 /* ═══════════════════════════════════════
@@ -354,17 +375,18 @@ li {
 }
 
 .twoColumn {
-  width: 450px;
+  width: 480px;
   flex-shrink: 0;
 }
 
 /* Make the right column sticky */
 .page > .twoColumn:last-child {
   position: sticky;
-  top: 20px;
+  top: 0; /* Start at the very top */
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
+  padding-top: 10px;
 }
 
 .threeColumn {
