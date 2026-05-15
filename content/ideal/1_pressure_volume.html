@@ -45,9 +45,9 @@ title: "Pressure & Volume"
 			setBoxWidth(sim, value);
 			setWallsAlongBorder(sim);
 			
-			// Update the renderer to match the new box dimensions
-			copyRectangle(sim.renderer.bounds, sim.boxBounds);
-			updateRendererBounds(sim.renderer);
+			// We DO NOT update the renderer bounds here. 
+			// Keeping the renderer bounds at the original max size ensures the particles 
+			// maintain a constant visual size while the box itself appears to shrink.
 		},
 	});
 </script>

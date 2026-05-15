@@ -247,25 +247,22 @@ nav h1 a:hover {
 
 .navigationArea a {
   flex: 1;
-  font-size: 40px;
+  font-size: 50px;
   font-family: var(--font-mono);
   text-decoration: none;
   color: var(--text-muted);
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  border-radius: 40px;
+  background: transparent;
+  border: none;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all var(--transition-medium);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
 }
 
 .navigationArea a:hover {
   color: var(--aquamarine);
-  border-color: var(--aquamarine);
-  background: var(--bg-elevated);
-  box-shadow: 0 0 20px var(--aquamarine-glow);
+  text-shadow: 0 0 20px var(--aquamarine-glow);
+  transform: scale(1.2);
   text-decoration: none;
 }
 
