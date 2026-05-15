@@ -44,6 +44,12 @@ title: "Pressure & Volume"
 			currentBoxWidth = value;
 			setBoxWidth(sim, value);
 			setWallsAlongBorder(sim);
+			
+			// Visually resize the canvas so the 'box' itself shrinks, maintaining aspect ratio for particles
+			sim.canvas.width = sim.pixelWidth * (value / 100);
+			sim.canvas.style.width = sim.canvas.width + "px";
+			sim.renderer.bounds.width = value;
+			updateRendererBounds(sim.renderer);
 		},
 	});
 </script>
