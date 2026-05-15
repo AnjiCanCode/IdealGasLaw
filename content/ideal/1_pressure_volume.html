@@ -2,7 +2,7 @@
 title: "Pressure & Volume"
 ---
 <div class="page">
-<div class="stepLog twoColumn">
+<div class="stepLog">
 
 <script>
     var sim = createSimulation({
@@ -56,17 +56,7 @@ title: "Pressure & Volume"
 	});
 </script>
 
-<script>
-	createTimeSeriesHere({
-		timeRange: 80,
-		yMax: 100,
-		update: function(graph) {
-			return {time: sim.time, data: [getTotalPressure(sim)]};
-		},
-	});
-</script>
-
-<p>Shrink the box and watch what happens.</p>
+<p>Shrink the box and watch the pressure graph on the right.</p>
 
 <script>
 	cue(function() {
@@ -94,11 +84,19 @@ title: "Pressure & Volume"
 
 <p>Double the volume, halve the pressure. The product <strong>P × V stays roughly constant</strong> as long as the temperature doesn't change.</p>
 
-
 </div>
+
 <div class="twoColumn">
-<script>
-	insertHere(sim.div);
-</script>
+	<script>
+		insertHere(sim.div);
+
+		createTimeSeriesHere({
+			timeRange: 80,
+			yMax: 120,
+			update: function(graph) {
+				return {time: sim.time, data: [getTotalPressure(sim)]};
+			},
+		});
+	</script>
 </div>
 </div>

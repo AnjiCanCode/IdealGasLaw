@@ -2,7 +2,7 @@
 title: "Non-Ideal Mixtures"
 ---
 <div class="page">
-<div class="stepLog twoColumn">
+<div class="stepLog">
 
 <script>
     var sim = createSimulation({
@@ -20,19 +20,19 @@ title: "Non-Ideal Mixtures"
 				particle.type = 0;
 				randomDiscInRect(particle.position, particle.radius, simulation.boxBounds);
 				v2.set(particle.velocity, randomGaussian(), randomGaussian());
-				v2.scale(particle.velocity, particle.velocity, 1.5);
+				v2.scale(particle.velocity, particle.velocity, 2);
 				addParticle(simulation, particle);
 			}
 
-			// Type B particles (red)
+			// Type B particles (cyan)
 			var countB = 50;
 			for (var i = 0; i < countB; i++) {
 				var particle = new Particle();
 				particle.type = 1;
-				particle.color = Color.gray;
+				particle.color = Color.cyan;
 				randomDiscInRect(particle.position, particle.radius, simulation.boxBounds);
 				v2.set(particle.velocity, randomGaussian(), randomGaussian());
-				v2.scale(particle.velocity, particle.velocity, 1.5);
+				v2.scale(particle.velocity, particle.velocity, 2);
 				addParticle(simulation, particle);
 			}
 
@@ -60,7 +60,7 @@ title: "Non-Ideal Mixtures"
 
 <p>Real molecules interact differently depending on what they're near. A-A interactions might differ from A-B interactions.</p>
 
-<p>Right now, all interactions are equal, the particles mix freely. Use the slider to change how <strong>A</strong> and <strong style="color: #ff6b6b;">B</strong> interact with each other.</p>
+<p>Right now, all interactions are equal, and the particles mix freely. Use the slider below to change how <strong>White</strong> and <strong style="color: #00ffff;">Cyan</strong> particles interact with each other.</p>
 
 <script>
 	createSliderHere({
@@ -81,7 +81,7 @@ title: "Non-Ideal Mixtures"
 	});
 </script>
 
-<p>Try maximizing the A-B attraction.</p>
+<p>Try maximizing the A-B attraction and watch the graph on the right.</p>
 
 <script>
 	cue(function() {
@@ -90,7 +90,7 @@ title: "Non-Ideal Mixtures"
 	endStep();
 </script>
 
-<p>Strong cross-species attraction causes A and B to <strong>cluster together</strong>. The mixture behaves very differently from a simple sum of its parts. This is a <strong>negative deviation</strong> from Raoult's Law, the effective pressure is lower than the ideal mixture prediction.</p>
+<p>Strong cross-species attraction causes A and B to <strong>cluster together</strong>. The mixture behaves very differently from a simple sum of its parts. This is a <strong>negative deviation</strong> from Raoult's Law; the effective pressure is lower than the ideal mixture prediction.</p>
 
 <p>Now reduce A-B interaction to near zero (repulsive only).</p>
 
@@ -101,25 +101,23 @@ title: "Non-Ideal Mixtures"
 	endStep();
 </script>
 
-<script>
-	createTimeSeriesHere({
-		timeRange: 80,
-		yMax: 25,
-		update: function(graph) {
-			return {time: sim.time, data: [getTotalPressure(sim)]};
-		},
-	});
-</script>
+<p>Without cross-attraction, the A and B particles <strong>separate</strong>; like-attracts-like wins. Each species forms its own cluster. This is <strong>phase separation</strong>, the same phenomenon behind oil and water.</p>
 
-<p>Without cross-attraction, the A and B particles <strong>separate</strong>, like-attracts-like wins. Each species forms its own cluster. This is <strong>phase separation</strong>, the same phenomenon behind oil and water.</p>
-
-<p>Real chemical mixtures, solutions of ethanol and water, mixtures of industrial gases, behave this way. The ideal gas law and Dalton's law assume no interactions, but real chemistry is all about interactions.</p>
-
+<p>Real chemical mixtures, such as solutions of ethanol and water or industrial gas mixtures, behave this way. The ideal gas law and Dalton's law assume no interactions, but real chemistry is all about interactions.</p>
 
 </div>
+
 <div class="twoColumn">
-<script>
-	insertHere(sim.div);
-</script>
+	<script>
+		insertHere(sim.div);
+
+		createTimeSeriesHere({
+			timeRange: 80,
+			yMax: 120,
+			update: function(graph) {
+				return {time: sim.time, data: [getTotalPressure(sim)]};
+			},
+		});
+	</script>
 </div>
 </div>

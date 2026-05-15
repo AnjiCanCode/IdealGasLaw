@@ -2969,7 +2969,11 @@ function createSimulation(opts)
     simulation.renderer = createRenderer(simulation.canvas);
 
     resetSimulation(simulation);
-    drawSimulation(simulation);
+    
+    // Draw initial frame after a short delay to ensure DOM insertion has happened
+    setTimeout(function() {
+        drawSimulation(simulation);
+    }, 10);
 
     // ! Start simulation
 

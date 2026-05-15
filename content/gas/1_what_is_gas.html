@@ -2,7 +2,7 @@
 title: "What is a Gas?"
 ---
 <div class="page">
-<div class="stepLog twoColumn">
+<div class="stepLog">
 
 <script>
     var sim = createSimulation({
@@ -26,6 +26,8 @@ title: "What is a Gas?"
     });
 </script>
 
+<h2>Gas Basics: Particles in Motion</h2>
+
 <p>A <strong>gas</strong> is a collection of tiny particles, atoms or molecules, moving randomly in all directions.</p>
 
 <p>They bounce off each other and off the walls of their container. Between collisions, they travel in straight lines.</p>
@@ -33,16 +35,13 @@ title: "What is a Gas?"
 <p>Watch the particles on the right. Notice how they <strong>spread out to fill the entire box</strong>.</p>
 
 <script>
-	createTimeSeriesHere({
-		timeRange: 80,
-		yMax: 100,
-		update: function(graph) {
-			return {time: sim.time, data: [getTotalPressure(sim)]};
-		},
+	cue(function() {
+		return (sim.time > 5);
 	});
+	endStep();
 </script>
 
-<p>The graph above shows the <strong>pressure</strong> on the walls. Every time a particle bounces off a wall, it pushes on it. The combined effect of countless tiny pushes is what we call pressure.</p>
+<p>The graph on the right shows the <strong>pressure</strong> on the walls. Every time a particle bounces off a wall, it pushes on it. The combined effect of countless tiny pushes is what we call pressure.</p>
 
 <p>Try <strong>adding more particles</strong> with the create tool and watch what happens to the pressure.</p>
 
@@ -73,9 +72,18 @@ title: "What is a Gas?"
 </p>
 
 </div>
+
 <div class="twoColumn">
-<script>
-	insertHere(sim.div);
-</script>
+	<script>
+		insertHere(sim.div);
+
+		createTimeSeriesHere({
+			timeRange: 80,
+			yMax: 120,
+			update: function(graph) {
+				return {time: sim.time, data: [getTotalPressure(sim)]};
+			},
+		});
+	</script>
 </div>
 </div>

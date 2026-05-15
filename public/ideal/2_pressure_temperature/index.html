@@ -24,7 +24,7 @@
 		<nav id="navBar"></nav>
 <div id="chapter">
 <div class="page">
-<div class="stepLog twoColumn">
+<div class="stepLog">
 
 <script>
     var sim = createSimulation({
@@ -41,7 +41,7 @@
 				var particle = new Particle();
 				randomDiscInRect(particle.position, particle.radius, simulation.boxBounds);
 				v2.set(particle.velocity, randomGaussian(), randomGaussian());
-				v2.scale(particle.velocity, particle.velocity, 1.25);
+				v2.scale(particle.velocity, particle.velocity, 2.5);
 				addParticle(simulation, particle);
 			}
 
@@ -54,7 +54,7 @@
 
 <p>Now let's keep the volume fixed and change the <strong>temperature</strong> instead.</p>
 
-<p>Temperature controls how fast the particles move. Use the slider to crank up the heat.</p>
+<p>Temperature controls how fast the particles move. Use the slider below to crank up the heat.</p>
 
 <script>
 	createSliderHere({
@@ -70,7 +70,7 @@
 	});
 </script>
 
-<p>Increase the temperature and watch the particles.</p>
+<p>Increase the temperature and watch the particles on the right.</p>
 
 <script>
 	cue(function() {
@@ -80,16 +80,6 @@
 </script>
 
 <p>The particles are moving <strong>much faster</strong>! They hit the walls harder and more often.</p>
-
-<script>
-	createTimeSeriesHere({
-		timeRange: 80,
-		yMax: 100,
-		update: function(graph) {
-			return {time: sim.time, data: [getTotalPressure(sim)]};
-		},
-	});
-</script>
 
 <p>Now cool them back down.</p>
 
@@ -108,12 +98,20 @@
 
 <p>Double the temperature, double the pressure. The ratio <strong>P/T stays constant</strong> when volume doesn't change.</p>
 
-
 </div>
+
 <div class="twoColumn">
-<script>
-	insertHere(sim.div);
-</script>
+	<script>
+		insertHere(sim.div);
+
+		createTimeSeriesHere({
+			timeRange: 80,
+			yMax: 120,
+			update: function(graph) {
+				return {time: sim.time, data: [getTotalPressure(sim)]};
+			},
+		});
+	</script>
 </div>
 </div>
 

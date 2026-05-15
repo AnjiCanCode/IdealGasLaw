@@ -24,7 +24,7 @@
 		<nav id="navBar"></nav>
 <div id="chapter">
 <div class="page">
-<div class="stepLog twoColumn">
+<div class="stepLog">
 
 <h2>The Van der Waals Equation</h2>
 
@@ -38,6 +38,9 @@
 </ul>
 
 <p>Let's compare. On the right are <strong>two simulations running side by side</strong>.</p>
+
+<p><strong>Top:</strong> Ideal gas (no attraction, point particles)<br>
+<strong>Bottom:</strong> Real gas (attraction + finite size)</p>
 
 <script>
     var idealSim = createSimulation({
@@ -56,7 +59,7 @@
 				var particle = new Particle();
 				randomDiscInRect(particle.position, particle.radius, simulation.boxBounds);
 				v2.set(particle.velocity, randomGaussian(), randomGaussian());
-				v2.scale(particle.velocity, particle.velocity, 1.5);
+				v2.scale(particle.velocity, particle.velocity, 4);
 				addParticle(simulation, particle);
 			}
 			setToolbarAvailableTools(simulation.toolbar, ["move"]);
@@ -89,24 +92,9 @@
     });
 </script>
 
-<p><strong>Top:</strong> Ideal gas (no attraction, point particles)<br>
-<strong>Bottom:</strong> Real gas (attraction + finite size)</p>
-
-<script>
-	createTimeSeriesHere({
-		timeRange: 100,
-		yMax: 30,
-		update: function(graph) {
-			var idealP = getTotalPressure(idealSim);
-			var realP = getTotalPressure(realSim);
-			return {time: idealSim.time, data: [idealP, realP]};
-		},
-	});
-</script>
-
 <p>The pressure graph shows both: <strong>ideal</strong> (first trace) vs <strong>real</strong> (second trace).</p>
 
-<p>Change the temperature and see how the difference changes.</p>
+<p>Change the temperature using the slider below and see how the difference changes.</p>
 
 <script>
 	createSliderHere({
@@ -132,7 +120,7 @@
 	endStep();
 </script>
 
-<p>At low temperature, the real gas pressure drops significantly below ideal, the attractions dominate. If you go cold enough, the real gas will start to <strong>condense</strong> into clumps!</p>
+<p>At low temperature, the real gas pressure drops significantly below ideal, as attractions dominate. If you go cold enough, the real gas will start to <strong>condense</strong> into clumps!</p>
 
 <p>Heat it up high.</p>
 
@@ -143,15 +131,25 @@
 	endStep();
 </script>
 
-<p>At high temperature, the two pressures converge, fast-moving particles are barely affected by the weak attractions. <strong>Hot real gases behave nearly ideally.</strong></p>
-
+<p>At high temperature, the two pressures converge; fast-moving particles are barely affected by the weak attractions. <strong>Hot real gases behave nearly ideally.</strong></p>
 
 </div>
+
 <div class="twoColumn">
-<script>
-	insertHere(idealSim.div);
-	insertHere(realSim.div);
-</script>
+	<script>
+		insertHere(idealSim.div);
+		insertHere(realSim.div);
+
+		createTimeSeriesHere({
+			timeRange: 100,
+			yMax: 120,
+			update: function(graph) {
+				var idealP = getTotalPressure(idealSim);
+				var realP = getTotalPressure(realSim);
+				return {time: idealSim.time, data: [idealP, realP]};
+			},
+		});
+	</script>
 </div>
 </div>
 
