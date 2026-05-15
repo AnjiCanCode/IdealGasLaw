@@ -16,14 +16,7 @@ title: "Correcting the Ideal Gas Law"
 			setBoxWidth(simulation, 60);
 			setWallsAlongBorder(simulation);
 
-			var particleCount = 80;
-			for (var i = 0; i < particleCount; i++) {
-				var particle = new Particle();
-				randomDiscInRect(particle.position, particle.radius, simulation.boxBounds);
-				v2.set(particle.velocity, randomGaussian(), randomGaussian());
-				v2.scale(particle.velocity, particle.velocity, 2);
-				addParticle(simulation, particle);
-			}
+			fillBoxWithParticles(simulation, 80, 10);
 			setToolbarAvailableTools(simulation.toolbar, ["move"]);
         },
     });
@@ -38,13 +31,7 @@ title: "Correcting the Ideal Gas Law"
 			setBoxWidth(simulation, 60);
 			setWallsAlongBorder(simulation);
 
-			var particleCount = 80;
-			var particles = [];
-			for (var i = 0; i < particleCount; i++) {
-				var particle = new Particle();
-				particles.push(particle);
-			}
-			addParticlesRandomlyAround(simulation, particles, v2(0, 0));
+			fillBoxWithParticles(simulation, 80, 10);
 
 			var ljInteraction = new LennardJonesInteraction();
 			ljInteraction.strength = 5;
@@ -118,6 +105,8 @@ title: "Correcting the Ideal Gas Law"
 	createTimeSeriesHere({
 		timeRange: 100,
 		yMax: 120,
+		labels: ["Ideal Gas", "Real Gas"],
+		colors: [Color.white, Color.blue],
 		update: function(graph) {
 			var idealP = getTotalPressure(idealSim);
 			var realP = getTotalPressure(realSim);

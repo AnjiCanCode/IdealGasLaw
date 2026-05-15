@@ -1900,24 +1900,59 @@ function createTimeSeries(opts)
         }),
         yMin: opts.yMin,
         yMax: opts.yMax,
+        colors: opts.colors || [Color.white, Color.red, Color.yellow, Color.blue, Color.purple],
+        labels: opts.labels,
         update: opts.update,
         updater: null,
         div: null,
     }
 
     timeSeries.div = timeSeries.graph.div;
+    timeSeries.div.style.position = "relative"; // Ensure legend positions correctly
+
+    // Generate Legend if labels are provided
+    if (timeSeries.labels) {
+        var legend = document.createElement("div");
+        legend.style.position = "absolute";
+        legend.style.top = "10px";
+        legend.style.right = "10px";
+        legend.style.background = "var(--bg-elevated)";
+        legend.style.border = "1px solid var(--border-medium)";
+        legend.style.padding = "8px";
+        legend.style.borderRadius = "4px";
+        legend.style.fontSize = "12px";
+        legend.style.color = "var(--text-bright)";
+        legend.style.pointerEvents = "none";
+        
+        var html = "";
+        for (var i = 0; i < timeSeries.labels.length; i++) {
+            var colorObj = timeSeries.colors[i];
+            var colorCss = colorObj.css ? colorObj.css : "white";
+            html += '<div style="display:flex; align-items:center; margin-bottom: 4px;">';
+            html += '<div style="width: 12px; height: 12px; background: ' + colorCss + '; margin-right: 8px; border-radius: 2px;"></div>';
+            html += '<div>' + timeSeries.labels[i] + '</div>';
+            html += '</div>';
+        }
+        legend.innerHTML = html;
+        timeSeries.div.appendChild(legend);
+    }
+
     timeSeries.updater = function()
     {
         var newData = timeSeries.update();
         addToLog(timeSeries.timeLog, newData.time, newData.data);
+        var curveIndex = 0;
         for (var key in timeSeries.timeLog.data)
         {
             var values = timeSeries.timeLog.data[key];
+            var curveColor = timeSeries.colors[curveIndex % timeSeries.colors.length];
             addCurve(timeSeries.graph,
             {
                 x: timeSeries.timeLog.time,
-                y: values
+                y: values,
+                color: curveColor
             });
+            curveIndex++;
         }
         addAxes(timeSeries.graph,
         {
