@@ -24,7 +24,7 @@
 		<nav id="navBar"></nav>
 <div id="chapter">
 <div class="page">
-<div class="stepLog">
+<div class="stepLog twoColumn">
 
 <script>
     var sim = createSimulation({
@@ -41,7 +41,7 @@
 				var particle = new Particle();
 				randomDiscInRect(particle.position, particle.radius, simulation.boxBounds);
 				v2.set(particle.velocity, randomGaussian(), randomGaussian());
-				v2.scale(particle.velocity, particle.velocity, 4);
+				v2.scale(particle.velocity, particle.velocity, 1.5);
 				addParticle(simulation, particle);
 			}
 
@@ -56,16 +56,16 @@
 
 <p>The ideal gas law assumes particles are <strong>infinitely small points</strong>. But real molecules have size!</p>
 
-<p>Start by adding a <em>lot</em> more particles with the <strong>create</strong> tool on the right sidebar.</p>
+<p>Start by adding a <em>lot</em> more particles with the create tool.</p>
 
 <script>
 	cue(function() {
-		return (sim.particles.length > 180);
+		return (sim.particles.length > 200);
 	});
 	endStep();
 </script>
 
-<p>Now <strong>shrink the box</strong> using the slider below.</p>
+<p>Now <strong>shrink the box</strong>.</p>
 
 <script>
 	createSliderHere({
@@ -81,8 +81,7 @@
 			// Visually resize the canvas
 			var newWidth = sim.pixelWidth * (value / 80);
 			sim.canvas.style.width = newWidth + "px";
-			sim.canvas.width = newWidth * (window.devicePixelRatio || 1);
-			sim.canvas.height = sim.canvas.width * (sim.boxBounds.height / sim.boxBounds.width);
+			sim.canvas.width = newWidth * sim.renderer.devicePixelRatio;
 			copyRectangle(sim.renderer.bounds, sim.boxBounds);
 			updateRendererBounds(sim.renderer);
 		},
@@ -91,35 +90,37 @@
 
 <script>
 	cue(function() {
-		return (currentBoxWidth < 40);
+		return (currentBoxWidth < 30);
 	});
 	endStep();
 </script>
 
-<p>At high density, the particles are <strong>jammed together</strong>. They can't overlap; each one occupies space that is unavailable to the others.</p>
+<p>At high density, the particles are <strong>jammed together</strong>. They can't overlap, each one occupies space that is unavailable to the others.</p>
+
+<script>
+	createTimeSeriesHere({
+		timeRange: 80,
+		yMax: 80,
+		update: function(graph) {
+			return {time: sim.time, data: [getTotalPressure(sim)]};
+		},
+	});
+</script>
 
 <p>The pressure is <strong>much higher</strong> than the ideal gas law would predict. The <em>effective</em> volume available to each particle is less than V because the other particles are in the way.</p>
 
-<p>This is the <strong>excluded volume</strong> effect; the correction parameter <em>b</em> in the van der Waals equation accounts for this. The actual free volume is V - nb, where n is the number of particles.</p>
+<p>This is the <strong>excluded volume</strong> effect, the correction parameter <em>b</em> in the van der Waals equation accounts for this. The actual free volume is V - nb, where n is the number of particles.</p>
 
 <div class="equation">V<sub>effective</sub> = V − nb</div>
 
 <p>At low density (big box), this correction barely matters. But cram the particles together and it dominates!</p>
 
+
 </div>
-
 <div class="twoColumn">
-	<script>
-		insertHere(sim.div);
-
-		createTimeSeriesHere({
-			timeRange: 80,
-			yMax: 120,
-			update: function(graph) {
-				return {time: sim.time, data: [getTotalPressure(sim)]};
-			},
-		});
-	</script>
+<script>
+	insertHere(sim.div);
+</script>
 </div>
 </div>
 

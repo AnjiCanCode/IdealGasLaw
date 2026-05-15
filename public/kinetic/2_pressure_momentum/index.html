@@ -24,7 +24,7 @@
 		<nav id="navBar"></nav>
 <div id="chapter">
 <div class="page">
-<div class="stepLog">
+<div class="stepLog twoColumn">
 
 <script>
     var wallDetectorSim = createSimulation({
@@ -51,21 +51,31 @@
 <p>Here's a single, large particle. Throw it at a wall!</p>
 
 <script>
+	createTimeSeriesHere({
+		timeRange: 50,
+		yMax: 10,
+		update: function(graph) {
+			return {time: wallDetectorSim.time, data: [getTotalPressure(wallDetectorSim)]};
+		},
+	});
+</script>
+
+<script>
 	cue(function() {
 		var pressure = getTotalPressure(wallDetectorSim);
-		return (pressure > 0.5);
+		return (pressure > 1);
 	});
 	endStep();
 </script>
 
-<p>See that spike in the graph on the right? That's the <strong>momentum transfer</strong>. The particle hits the wall, reverses direction, and pushes the wall outward in the process.</p>
+<p>See that spike in the graph? That's the <strong>momentum transfer</strong>, the particle hits the wall, reverses direction, and pushes the wall outward in the process.</p>
 
 <p>A harder throw = a bigger spike. Try throwing it faster!</p>
 
 <script>
 	cue(function() {
 		var pressure = getTotalPressure(wallDetectorSim);
-		return (pressure > 2);
+		return (pressure > 5);
 	});
 	endStep();
 </script>
@@ -77,7 +87,7 @@
 	var dragTimeLeft = dragTime;
 	cue(function(dt) {
 		var pressure = getTotalPressure(wallDetectorSim);
-		if (pressure > 0.1)
+		if (pressure > 0.5)
 		{
 			dragTimeLeft -= dt;
 		}
@@ -94,23 +104,14 @@
 
 <p>This is exactly what gas pressure is: the <strong>average force per unit area</strong> from countless molecular collisions, happening billions of times per second.</p>
 
-</div>
 
+</div>
 <div class="twoColumn">
-	<script>
-		insertHere(wallDetectorSim.div);
-
-		createTimeSeriesHere({
-			timeRange: 50,
-			yMax: 120,
-			update: function(graph) {
-				return {time: wallDetectorSim.time, data: [getTotalPressure(wallDetectorSim)]};
-			},
-		});
-	</script>
+<script>
+	insertHere(wallDetectorSim.div);
+</script>
 </div>
-</div>
-
+</di
 </div>
 
 	</div>

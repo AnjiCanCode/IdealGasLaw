@@ -24,7 +24,7 @@
 		<nav id="navBar"></nav>
 <div id="chapter">
 <div class="page">
-<div class="stepLog">
+<div class="stepLog twoColumn">
 
 <script>
     var sim = createSimulation({
@@ -34,26 +34,26 @@
 			setBoxWidth(simulation, 80);
 			setWallsAlongBorder(simulation);
 
-			// Type A particles (default white)
+			// Type A particles (default black)
 			var countA = 60;
 			for (var i = 0; i < countA; i++) {
 				var particle = new Particle();
 				particle.type = 0;
 				randomDiscInRect(particle.position, particle.radius, simulation.boxBounds);
 				v2.set(particle.velocity, randomGaussian(), randomGaussian());
-				v2.scale(particle.velocity, particle.velocity, 3);
+				v2.scale(particle.velocity, particle.velocity, 2);
 				addParticle(simulation, particle);
 			}
 
-			// Type B particles (distinct color)
+			// Type B particles (red)
 			var countB = 40;
 			for (var i = 0; i < countB; i++) {
 				var particle = new Particle();
 				particle.type = 1;
-				particle.color = Color.cyan;
+				particle.color = Color.gray;
 				randomDiscInRect(particle.position, particle.radius, simulation.boxBounds);
 				v2.set(particle.velocity, randomGaussian(), randomGaussian());
-				v2.scale(particle.velocity, particle.velocity, 3);
+				v2.scale(particle.velocity, particle.velocity, 2);
 				addParticle(simulation, particle);
 			}
 
@@ -66,7 +66,7 @@
 
 <p>What happens when you mix different gases together?</p>
 
-<p>On the right, <strong>White</strong> particles and <strong style="color: #00ffff;">Cyan</strong> particles share the same box. They're both ideal gases, no attraction, just bouncing.</p>
+<p>On the right, <strong>black</strong> particles and <strong style="color: #ff6b6b;">red</strong> particles share the same box. They're both ideal gases, no attraction, just bouncing.</p>
 
 <p>The total pressure on the walls is the sum of the <strong>partial pressures</strong> from each gas:</p>
 
@@ -74,7 +74,17 @@
 
 <p>This is <strong>Dalton's Law</strong>: each gas contributes pressure as if the other gas wasn't there.</p>
 
-<p>Try adding more of one type using the <strong>create</strong> tool on the right sidebar. Notice how the total pressure graph increases.</p>
+<script>
+	createTimeSeriesHere({
+		timeRange: 80,
+		yMax: 30,
+		update: function(graph) {
+			return {time: sim.time, data: [getTotalPressure(sim)]};
+		},
+	});
+</script>
+
+<p>Try adding more of one type using the <strong>create</strong> tool. The total pressure increases, but each gas type independently contributes its share.</p>
 
 <script>
 	cue(function() {
@@ -83,24 +93,16 @@
 	endStep();
 </script>
 
-<p>This works because ideal gas particles don't care what's around them; a nitrogen molecule hits the wall just as hard whether it's surrounded by other nitrogen or by oxygen molecules.</p>
+<p>This works because ideal gas particles don't care what's around them, a nitrogen molecule hits the wall just as hard whether it's surrounded by other nitrogen or by oxygen molecules.</p>
 
 <p>But what happens when the particles <em>do</em> care about each other?</p>
 
+
 </div>
-
 <div class="twoColumn">
-	<script>
-		insertHere(sim.div);
-
-		createTimeSeriesHere({
-			timeRange: 80,
-			yMax: 120,
-			update: function(graph) {
-				return {time: sim.time, data: [getTotalPressure(sim)]};
-			},
-		});
-	</script>
+<script>
+	insertHere(sim.div);
+</script>
 </div>
 </div>
 

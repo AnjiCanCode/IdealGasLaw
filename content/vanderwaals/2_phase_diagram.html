@@ -2,7 +2,7 @@
 title: "Phase Transitions"
 ---
 <div class="page">
-<div class="stepLog">
+<div class="stepLog twoColumn">
 
 <script>
     var sim = createSimulation({
@@ -45,7 +45,7 @@ title: "Phase Transitions"
 
 <p>The particles on the right start as a <strong>solid</strong>, locked in a crystal lattice, barely jiggling.</p>
 
-<p>Slowly increase the temperature using the slider below.</p>
+<p>Slowly increase the temperature.</p>
 
 <script>
     createSliderHere({
@@ -69,7 +69,7 @@ title: "Phase Transitions"
     endStep();
 </script>
 
-<p>The particles jiggle in place; they're a <strong>solid</strong>.</p>
+<p>The particles jiggle in place, they're a <strong>solid</strong>.</p>
 
 <p>Keep increasing.</p>
 
@@ -93,7 +93,7 @@ title: "Phase Transitions"
     endStep();
 </script>
 
-<p>Particles start breaking free from the group entirely; the liquid is <strong>evaporating into a gas</strong>.</p>
+<p>Particles start breaking free from the group entirely, the liquid is <strong>evaporating into a gas</strong>.</p>
 
 <script>
     cue(function()
@@ -103,24 +103,15 @@ title: "Phase Transitions"
     endStep();
 </script>
 
-<p>At high enough temperature, the particles bounce freely; attractions can't hold them together anymore. This is a <strong>gas</strong>.</p>
+<p>At high enough temperature, the particles bounce freely, attractions can't hold them together anymore. This is a <strong>gas</strong>.</p>
 
-<p>The ideal gas law only describes this last state. The van der Waals equation bridges the gap, explaining why real gases can condense when cooled and why there's a <strong>critical temperature</strong> above which a gas cannot be liquefied, no matter the pressure.</p>
+<p>The ideal gas law only describes this last state. The van der Waals equation bridges the gap, explaining why real gases can condense when cooled and why there's a <strong>critical temperature</strong> above which a gas cannot be liquefied no matter the pressure.</p>
+
 
 </div>
-
 <div class="twoColumn">
-	<script>
-		insertHere(sim.div);
-
-		createTimeSeriesHere({
-			title: "Temperature",
-			timeRange: 80,
-			yMax: 120,
-			update: function(graph) {
-				return {time: sim.time, data: [getTotalTemperature(sim)]};
-			},
-		});
-	</script>
+<script>
+	insertHere(sim.div);
+</script>
 </div>
 </div>

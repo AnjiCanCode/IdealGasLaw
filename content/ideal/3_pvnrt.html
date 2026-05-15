@@ -2,7 +2,7 @@
 title: "PV = nRT"
 ---
 <div class="page">
-<div class="stepLog">
+<div class="stepLog twoColumn">
 
 <script>
     var sim = createSimulation({
@@ -19,7 +19,7 @@ title: "PV = nRT"
 				var particle = new Particle();
 				randomDiscInRect(particle.position, particle.radius, simulation.boxBounds);
 				v2.set(particle.velocity, randomGaussian(), randomGaussian());
-				v2.scale(particle.velocity, particle.velocity, 4);
+				v2.scale(particle.velocity, particle.velocity, 1.5);
 				addParticle(simulation, particle);
 			}
 
@@ -59,15 +59,14 @@ title: "PV = nRT"
 			// Visually resize the canvas
 			var newWidth = sim.pixelWidth * (value / 80);
 			sim.canvas.style.width = newWidth + "px";
-			sim.canvas.width = newWidth * (window.devicePixelRatio || 1);
-			sim.canvas.height = sim.canvas.width * (sim.boxBounds.height / sim.boxBounds.width);
+			sim.canvas.width = newWidth * sim.renderer.devicePixelRatio;
 			copyRectangle(sim.renderer.bounds, sim.boxBounds);
 			updateRendererBounds(sim.renderer);
 		},
 	});
 
 	createSliderHere({
-		initialValue: 10;
+		initialValue: 10,
 		min: 1, max: 50,
 		minLabel: "Cold", maxLabel: "Hot",
 		transform: function(x) { return (x * x) },
@@ -79,7 +78,7 @@ title: "PV = nRT"
 	});
 </script>
 
-<p>Add more particles with the <strong>create</strong> tool on the right to increase n.</p>
+<p>Add more particles with the <strong>create</strong> tool to increase n.</p>
 
 <script>
 	cue(function() {
@@ -90,23 +89,25 @@ title: "PV = nRT"
 
 <p>More particles → higher pressure, just as the equation predicts.</p>
 
+<script>
+	createTimeSeriesHere({
+		timeRange: 80,
+		yMax: 40,
+		update: function(graph) {
+			return {time: sim.time, data: [getTotalPressure(sim)]};
+		},
+	});
+</script>
+
 <p>The beauty of PV = nRT is that it predicts the <strong>pressure of any ideal gas</strong> if you know V, n, and T. No matter how you change the conditions, squeeze the box, heat it up, add particles, the relationship holds.</p>
 
 <p>But does it <em>always</em> hold? Let's find out what "ideal" really means…</p>
 
+
 </div>
-
 <div class="twoColumn">
-	<script>
-		insertHere(sim.div);
-
-		createTimeSeriesHere({
-			timeRange: 80,
-			yMax: 120,
-			update: function(graph) {
-				return {time: sim.time, data: [getTotalPressure(sim)]};
-			},
-		});
-	</script>
+<script>
+	insertHere(sim.div);
+</script>
 </div>
 </div>

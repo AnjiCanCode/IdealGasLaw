@@ -2,7 +2,7 @@
 title: "Intermolecular Attraction"
 ---
 <div class="page">
-<div class="stepLog">
+<div class="stepLog twoColumn">
 
 <script>
     var sim = createSimulation({
@@ -38,7 +38,7 @@ title: "Intermolecular Attraction"
 
 <p>Watch the particles, they tend to <strong>cluster</strong> slightly. They're not completely independent like ideal gas particles.</p>
 
-<p>Use the slider below to change the <strong>attraction strength</strong>.</p>
+<p>Use the slider to change the <strong>attraction strength</strong>.</p>
 
 <script>
 	createSliderHere({
@@ -55,7 +55,7 @@ title: "Intermolecular Attraction"
 	});
 </script>
 
-<p>Crank the attraction to maximum and watch the graph on the right.</p>
+<p>Crank the attraction to maximum.</p>
 
 <script>
 	cue(function() {
@@ -65,6 +65,16 @@ title: "Intermolecular Attraction"
 </script>
 
 <p>Strong attraction causes the particles to <strong>clump together</strong>. The gas starts to condense!</p>
+
+<script>
+	createTimeSeriesHere({
+		timeRange: 80,
+		yMax: 20,
+		update: function(graph) {
+			return {time: sim.time, data: [getTotalPressure(sim)]};
+		},
+	});
+</script>
 
 <p>Notice the pressure is <strong>lower</strong> than you'd expect. Why? Because particles that are being pulled back by their neighbors hit the walls with <strong>less force</strong>.</p>
 
@@ -85,19 +95,11 @@ title: "Intermolecular Attraction"
 
 <p>At high temperature, particles move too fast for attractions to matter. At low temperature, attractions dominate and can even cause <strong>liquefaction</strong>.</p>
 
+
 </div>
-
 <div class="twoColumn">
-	<script>
-		insertHere(sim.div);
-
-		createTimeSeriesHere({
-			timeRange: 80,
-			yMax: 120,
-			update: function(graph) {
-				return {time: sim.time, data: [getTotalPressure(sim)]};
-			},
-		});
-	</script>
+<script>
+	insertHere(sim.div);
+</script>
 </div>
 </div>

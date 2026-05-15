@@ -2,7 +2,7 @@
 title: "Pressure & Temperature"
 ---
 <div class="page">
-<div class="stepLog">
+<div class="stepLog twoColumn">
 
 <script>
     var sim = createSimulation({
@@ -26,13 +26,23 @@ title: "Pressure & Temperature"
 			setToolbarAvailableTools(simulation.toolbar, ["move"]);
         },
     });
+
+	insertHere(sim.div);
+
+	createTimeSeriesHere({
+		timeRange: 80,
+		yMax: 60,
+		update: function(graph) {
+			return {time: sim.time, data: [getTotalPressure(sim)]};
+		},
+	});
 </script>
 
 <h2>Pressure & Temperature: Gay-Lussac's Law</h2>
 
 <p>Now let's keep the volume fixed and change the <strong>temperature</strong> instead.</p>
 
-<p>Temperature controls how fast the particles move. Use the slider below to crank up the heat.</p>
+<p>Temperature controls how fast the particles move. Use the slider to crank up the heat.</p>
 
 <script>
 	createSliderHere({
@@ -48,7 +58,7 @@ title: "Pressure & Temperature"
 	});
 </script>
 
-<p>Increase the temperature and watch the particles on the right.</p>
+<p>Increase the temperature and watch the particles.</p>
 
 <script>
 	cue(function() {
@@ -77,18 +87,6 @@ title: "Pressure & Temperature"
 <p>Double the temperature, double the pressure. The ratio <strong>P/T stays constant</strong> when volume doesn't change.</p>
 
 </div>
-
 <div class="twoColumn">
-	<script>
-		insertHere(sim.div);
-
-		createTimeSeriesHere({
-			timeRange: 80,
-			yMax: 120,
-			update: function(graph) {
-				return {time: sim.time, data: [getTotalPressure(sim)]};
-			},
-		});
-	</script>
 </div>
 </div>
