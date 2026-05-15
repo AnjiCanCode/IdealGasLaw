@@ -12,14 +12,7 @@ title: "Pressure & Volume"
 			setBoxWidth(simulation, 100);
 			setWallsAlongBorder(simulation);
 
-			var particleCount = 150;
-			for (var i = 0; i < particleCount; i++) {
-				var particle = new Particle();
-				randomDiscInRect(particle.position, particle.radius, simulation.boxBounds);
-				v2.set(particle.velocity, randomGaussian(), randomGaussian());
-				v2.scale(particle.velocity, particle.velocity, 4);
-				addParticle(simulation, particle);
-			}
+			fillBoxWithParticles(simulation, 150, 8);
 
 			setToolbarAvailableTools(simulation.toolbar, ["move"]);
         },

@@ -2544,7 +2544,34 @@ function createIceMudSliderHere()
 
 
 
-// ! Particle setup
+function fillBoxWithParticles(simulation, count, temperature) {
+    var b = simulation.boxBounds;
+    var padding = 1.5;
+    var area = (b.width - 2 * padding) * (b.height - 2 * padding);
+    var spacing = Math.sqrt(area / count);
+    var cols = Math.floor((b.width - 2 * padding) / spacing);
+    var rows = Math.ceil(count / cols);
+    
+    // Adjust spacing to fit
+    var dx = (b.width - 2 * padding) / cols;
+    var dy = (b.height - 2 * padding) / rows;
+
+    var speedScale = Math.sqrt(temperature || 5);
+
+    for (var i = 0; i < count; i++) {
+        var col = i % cols;
+        var row = Math.floor(i / cols);
+        
+        var particle = new Particle();
+        // Jittered grid placement
+        particle.position[0] = b.left + padding + (col + 0.5) * dx + (Math.random() - 0.5) * dx * 0.2;
+        particle.position[1] = b.bottom + padding + (row + 0.5) * dy + (Math.random() - 0.5) * dy * 0.2;
+        
+        v2.set(particle.velocity, randomGaussian(), randomGaussian());
+        v2.scale(particle.velocity, particle.velocity, speedScale);
+        addParticle(simulation, particle);
+    }
+}
 
 var addOppositeParticles = function(simulation, d)
 {
