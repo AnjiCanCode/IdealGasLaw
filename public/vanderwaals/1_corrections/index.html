@@ -123,6 +123,11 @@
 	insertHere(idealSim.div);
 	insertHere(realSim.div);
 
+	createLegendHere([
+		{ label: "Ideal Gas", color: Color.gray },
+		{ label: "Real Gas", color: Color.aquamarine }
+	]);
+
 	createTimeSeriesHere({
 		timeRange: 100,
 		yMax: 120,
