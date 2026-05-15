@@ -2941,7 +2941,7 @@ function createSimulation(opts)
         var isAboveViewport = divBounds.bottom < 0;
         var isBelowViewport = divBounds.top > window.innerHeight;
 
-        var isAutoPaused = document.hidden || isAboveViewport || isBelowViewport;
+        var isAutoPaused = document.hidden;
 
         if (isAutoPaused)
         {
@@ -2969,6 +2969,7 @@ function createSimulation(opts)
     simulation.renderer = createRenderer(simulation.canvas);
 
     resetSimulation(simulation);
+    drawSimulation(simulation);
 
     // ! Start simulation
 
@@ -3411,6 +3412,13 @@ var updateSimulation = function()
                     for (var wallIndex = 0; wallIndex < simulation.walls.length; wallIndex++) {
                         var wall = simulation.walls[wallIndex];
                         v2.scale(wall.force, wall.force, pressureDecay);
+                    }
+
+                    // Clamp particles inside the box (helps when resizing walls rapidly)
+                    for (var i = 0; i < particles.length; i++) {
+                        var p = particles[i];
+                        p.position[0] = Math.max(simulation.boxBounds.left + p.radius, Math.min(simulation.boxBounds.right - p.radius, p.position[0]));
+                        p.position[1] = Math.max(simulation.boxBounds.bottom + p.radius, Math.min(simulation.boxBounds.top - p.radius, p.position[1]));
                     }
 
                     var collisionPool = new Pool(createCollision);

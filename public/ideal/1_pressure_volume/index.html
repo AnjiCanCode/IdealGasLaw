@@ -70,9 +70,20 @@
 			// Visually resize the canvas so the 'box' itself shrinks, maintaining aspect ratio for particles
 			var newWidth = sim.pixelWidth * (value / 100);
 			sim.canvas.style.width = newWidth + "px";
-			sim.canvas.width = newWidth * sim.renderer.devicePixelRatio;
+			sim.canvas.width = newWidth * (window.devicePixelRatio || 1);
+			sim.canvas.height = sim.canvas.width * (sim.boxBounds.height / sim.boxBounds.width);
 			copyRectangle(sim.renderer.bounds, sim.boxBounds);
 			updateRendererBounds(sim.renderer);
+		},
+	});
+</script>
+
+<script>
+	createTimeSeriesHere({
+		timeRange: 80,
+		yMax: 100,
+		update: function(graph) {
+			return {time: sim.time, data: [getTotalPressure(sim)]};
 		},
 	});
 </script>
@@ -87,16 +98,6 @@
 </script>
 
 <p>The particles hit the walls <strong>more often</strong> because they have less room. The pressure goes up!</p>
-
-<script>
-	createTimeSeriesHere({
-		timeRange: 80,
-		yMax: 100,
-		update: function(graph) {
-			return {time: sim.time, data: [getTotalPressure(sim)]};
-		},
-	});
-</script>
 
 <p>Now expand the box back.</p>
 
