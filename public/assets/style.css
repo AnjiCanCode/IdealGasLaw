@@ -108,23 +108,23 @@ header {
 }
 
 .isInternal .wrapper {
-  border-bottom: none;
-  background: transparent;
+  display: none;
 }
 
-.isInternal header {
-  justify-content: flex-start;
-  padding: 0 0 8px 0;
-}
-
-.isInternal header .siteTitle {
-  font-size: 14px;
+.homeButton {
+  display: inline-block;
+  font-size: 28px;
+  line-height: 1;
   color: var(--text-muted);
-  opacity: 0.6;
+  margin-bottom: 12px;
+  transition: all var(--transition-fast);
+  text-decoration: none !important;
 }
 
-.isInternal header .siteTitle:hover {
-  opacity: 1;
+.homeButton:hover {
+  color: var(--aquamarine);
+  text-shadow: 0 0 10px var(--aquamarine-glow);
+  transform: scale(1.1);
 }
 
 header .siteTitle {
@@ -220,7 +220,7 @@ nav h1 a:hover {
 }
 
 .isInternal #content {
-  padding-top: 20px;
+  padding-top: 15px;
 }
 
 /* ═══════════════════════════════════════
