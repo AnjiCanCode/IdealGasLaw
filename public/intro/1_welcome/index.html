@@ -33,14 +33,7 @@
 			setBoxWidth(simulation, 60);
 			setWallsAlongBorder(simulation);
 
-			var particleCount = 60;
-			for (var i = 0; i < particleCount; i++) {
-				var particle = new Particle();
-				randomDiscInRect(particle.position, particle.radius, simulation.boxBounds);
-				v2.set(particle.velocity, randomGaussian(), randomGaussian());
-				v2.scale(particle.velocity, particle.velocity, 2);
-				addParticle(simulation, particle);
-			}
+			fillBoxWithParticles(simulation, 60, 2);
 
 			setToolbarAvailableTools(simulation.toolbar, ["move", "create", "attract"]);
         },
@@ -83,7 +76,7 @@
 
 <p>You'll also see <strong>graphs</strong> and <strong>sliders</strong> on later pages that let you measure and control what's happening in the simulation.</p>
 
-<p>When you're ready, click the <strong>Next</strong> button in the right margin to continue.</p>
+<p>When you're ready, click the <strong>Next</strong> button to continue.</p>
 
 
 </div>

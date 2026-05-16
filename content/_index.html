@@ -8,7 +8,7 @@ title: "Beyond Ideal"
 
 <div class="flex">
 
-  <div class="concept-card threeColumn" style="text-align: center;">
+  <div class="concept-card twoColumn" style="text-align: center;">
     <h3>Ideal Gas</h3>
     <p>Tiny particles bouncing in a box, perfectly simple</p>
 
@@ -40,7 +40,7 @@ title: "Beyond Ideal"
 
   </div>
 
-  <div class="concept-card threeColumn" style="text-align: center;">
+  <div class="concept-card twoColumn" style="text-align: center;">
     <h3>Real Gas</h3>
     <p>Particles that attract, repel, and take up space</p>
 
@@ -69,44 +69,6 @@ title: "Beyond Ideal"
 			ljInteraction.separation *= 0.9;
 			ljInteraction.strength = 3;
 			setInteraction(simulation, 0, 0, ljInteraction);
-
-			setToolbarAvailableTools(simulation.toolbar, ["attract"]);
-			setElementIsVisible(simulation.controlsDiv, false);
-		}
-	});
-</script>
-
-  </div>
-
-  <div class="concept-card threeColumn" style="text-align: center;">
-    <h3>Mixtures</h3>
-    <p>Different particles, different rules</p>
-
-    <script>
-	var mixSim = createSimulationHere({
-		pixelWidth: 250,
-		pixelHeight: 200,
-		initialize: function(simulation)
-		{
-			var p = simulation.parameters;
-			p.isOnlyHardSpheres = true;
-			setBoxWidth(simulation, 80);
-			setWallsAlongBorder(simulation);
-
-			var particleCount = 50;
-			for (var i = 0; i < particleCount; i++) {
-				var particle = new Particle();
-				randomDiscInRect(particle.position, particle.radius, simulation.boxBounds);
-				v2.set(particle.velocity, randomGaussian(), randomGaussian());
-				v2.scale(particle.velocity, particle.velocity, 2);
-				particle.type = i % 2;
-				if (particle.type == 0) {
-					particle.color = Color.white;
-				} else {
-					particle.color = Color.red;
-				}
-				addParticle(simulation, particle);
-			}
 
 			setToolbarAvailableTools(simulation.toolbar, ["attract"]);
 			setElementIsVisible(simulation.controlsDiv, false);
@@ -159,11 +121,7 @@ title: "Beyond Ideal"
     <p>Correcting the ideal gas law for reality</p>
   </a>
 
-  <a class="chapter-card" href="/mixtures/1_dalton/">
-    <div class="chapter-number">Chapter 6</div>
-    <h3>Mixtures & Solutions</h3>
-    <p>What happens when you mix different gases</p>
-  </a>
+
 
   <a class="chapter-card" href="/playground/1_explore/">
     <div class="chapter-number">Playground</div>
