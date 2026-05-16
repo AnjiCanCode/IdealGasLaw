@@ -34,7 +34,13 @@
 			setBoxWidth(simulation, 80);
 			setWallsAlongBorder(simulation);
 
-			fillBoxWithParticles(simulation, 100, 8);
+			var particleCount = 100;
+			var particles = [];
+			for (var i = 0; i < particleCount; i++) {
+				var particle = new Particle();
+				particles.push(particle);
+			}
+			addParticlesRandomlyAround(simulation, particles, v2(0, 0));
 
 			var ljInteraction = new LennardJonesInteraction();
 			ljInteraction.strength = 5;
@@ -81,7 +87,7 @@
 
 <p>Strong attraction causes the particles to <strong>clump together</strong>. The gas starts to condense!</p>
 
-<p>Notice the pressure on the graph will <strong>gradually decline</strong> (after a potential initial spike). Why? Because particles that are being pulled back by their neighbors hit the walls with <strong>less force</strong>.</p>
+<p>Notice the pressure on the graph is <strong>lower</strong> than you'd expect. Why? Because particles that are being pulled back by their neighbors hit the walls with <strong>less force</strong>.</p>
 
 <p>Now turn attraction to zero.</p>
 

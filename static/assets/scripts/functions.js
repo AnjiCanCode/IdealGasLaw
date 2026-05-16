@@ -96,6 +96,17 @@ var NavigationInfo = new function ()
             title: "Phase Transitions",
         },
 
+        // Mixtures
+        {
+            url: "/mixtures/1_dalton/",
+            title: "Dalton's Law",
+            sequenceTitle: "Mixtures & Solutions",
+        },
+        {
+            url: "/mixtures/2_nonideal/",
+            title: "Non-Ideal Mixtures",
+        },
+
         // Playground
         {
             url: "/playground/1_explore/",
@@ -260,6 +271,7 @@ var chapterOrder = [
     "/kinetic",
     "/real",
     "/vanderwaals",
+    "/mixtures",
     "/playground",
 ];
 
@@ -292,9 +304,25 @@ document.addEventListener("DOMContentLoaded", function() {
     {
         prevUrl = current.sequence.panelUrls[current.panelIndex - 1];
     }
-    // Navigation moved to internal layout
-    document.getElementById("leftNavigationArea").innerHTML = "";
-    document.getElementById("rightNavigationArea").innerHTML = "";
+    document.getElementById("leftNavigationArea").innerHTML = `<a href="${prevUrl}" title="Previous Page">«</a>`;
+
+    var nextUrl;
+    if (isLastPanel)
+    {
+        // Go to first page of next chapter, or home if this is the last chapter
+        if (currentChapterIndex >= 0 && currentChapterIndex < chapterOrder.length - 1) {
+            var nextChapter = NavigationInfo.sequences[chapterOrder[currentChapterIndex + 1]];
+            nextUrl = nextChapter ? nextChapter.panelUrls[0] : "/";
+        } else {
+            nextUrl = "/";
+        }
+    }
+    else
+    {
+        nextUrl = current.sequence.panelUrls[current.panelIndex + 1];
+    }
+
+    document.getElementById("rightNavigationArea").innerHTML = `<a href="${nextUrl}" title="Next Page">»</a>`;
 
     // nav bar
 
@@ -4617,75 +4645,19 @@ window.addEventListener("DOMContentLoaded", function() {
         var leftColumn = document.querySelector(".page .twoColumn:first-child");
         
         if (leftColumn) {
-            var navContainer = document.createElement("div");
-            navContainer.className = "topNavContainer";
-            leftColumn.insertBefore(navContainer, leftColumn.firstChild);
-
             // Add Home Button (SVG)
             var homeBtn = document.createElement("a");
             homeBtn.href = "/";
-            homeBtn.innerHTML = '<svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>';
-            homeBtn.className = "navIconBtn";
+            homeBtn.innerHTML = '<svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor" style="display: block;"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>';
+            homeBtn.className = "homeButton";
             homeBtn.title = "Return Home";
-            navContainer.appendChild(homeBtn);
-
-            // Get navigation URLs
-            var current = NavigationInfo.currentPosition;
-            var isFirstPanel = (current.panelIndex === 0);
-            var isLastPanel = (current.panelIndex === (current.sequence.panelUrls.length - 1));
-            var currentChapterIndex = chapterOrder.indexOf(current.sequence.baseUrl);
-
-            var prevUrl = "/";
-            if (!isFirstPanel) {
-                prevUrl = current.sequence.panelUrls[current.panelIndex - 1];
-            } else if (currentChapterIndex > 0) {
-                var prevChapter = NavigationInfo.sequences[chapterOrder[currentChapterIndex - 1]];
-                prevUrl = prevChapter ? prevChapter.panelUrls[prevChapter.panelUrls.length - 1] : "/";
-            }
-
-            var nextUrl = "/";
-            if (!isLastPanel) {
-                nextUrl = current.sequence.panelUrls[current.panelIndex + 1];
-            } else if (currentChapterIndex >= 0 && currentChapterIndex < chapterOrder.length - 1) {
-                var nextChapter = NavigationInfo.sequences[chapterOrder[currentChapterIndex + 1]];
-                nextUrl = nextChapter ? nextChapter.panelUrls[0] : "/";
-            }
-
-            // Prev Arrow
-            var prevBtn = document.createElement("a");
-            prevBtn.href = prevUrl;
-            prevBtn.innerHTML = "←";
-            prevBtn.className = "navIconBtn";
-            prevBtn.title = "Previous";
-            navContainer.appendChild(prevBtn);
-
-            // Next Arrow
-            var nextBtn = document.createElement("a");
-            nextBtn.href = nextUrl;
-            nextBtn.innerHTML = "→";
-            nextBtn.className = "navIconBtn";
-            nextBtn.title = "Next";
-            navContainer.appendChild(nextBtn);
+            leftColumn.insertBefore(homeBtn, leftColumn.firstChild);
 
             // Move navBar if it exists
             var navBar = document.getElementById("navBar");
             if (navBar) {
-                leftColumn.insertBefore(navBar, navContainer.nextSibling);
+                leftColumn.insertBefore(navBar, homeBtn.nextSibling);
             }
-
-            // Add "Next" link at bottom of text
-            if (nextUrl !== "/") {
-                var nextPrompt = document.createElement("p");
-                nextPrompt.className = "nextPromptContainer";
-                nextPrompt.innerHTML = `Ready to proceed? <strong><a href="${nextUrl}" class="animatedNext">Next &rarr;</a></strong>`;
-                leftColumn.appendChild(nextPrompt);
-            }
-
-            // Add stabilization warning
-            var warning = document.createElement("div");
-            warning.className = "simWarning";
-            warning.innerHTML = "<em>Note: Simulations may exhibit a brief velocity spike upon loading. Please allow a few seconds for the particles to stabilize.</em>";
-            leftColumn.insertBefore(warning, navContainer.nextSibling);
         }
     }
 });
